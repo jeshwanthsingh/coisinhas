@@ -1532,3 +1532,249 @@ button {
     height: 60px;
   }
 }
+
+/* Chapter Two: readable original copy and safe-area breathing room. */
+.app {
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+}
+.opening-copy > p {
+  font-size: 16px;
+  line-height: 1.85;
+  white-space: normal;
+}
+.opening-footnote {
+  font-size: 12px;
+}
+.room-heading > p {
+  font-size: 17px;
+}
+.room-caption {
+  font-size: 11px;
+}
+.wordmark span {
+  font-size: 10px;
+}
+.language-toggle {
+  font-size: 12px;
+}
+.card-body {
+  font-size: 16px;
+  line-height: 1.8;
+}
+.card-metadata {
+  font-size: 12px;
+}
+.card-top {
+  font-size: 11px;
+}
+.card-close {
+  font-size: 13px;
+}
+.card-language button {
+  min-width: 44px;
+  font-size: 11px;
+}
+.eye-row button {
+  min-width: 44px;
+}
+.eye-rolls p {
+  font-size: 14px;
+}
+.explore-hint,
+.progress {
+  font-size: 12px;
+}
+.museum-layout .room-heading > p {
+  font-size: 15px;
+}
+.progress p {
+  font-size: 15px;
+}
+.voice-note > p {
+  font-size: 16px;
+}
+.voice-placeholder p {
+  font:
+    17px/1.7 Georgia,
+    serif;
+}
+.voice-placeholder small {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.voice-next,
+.audio-button {
+  font-size: 15px;
+}
+.audio-timing {
+  max-width: 320px;
+  font-size: 12px;
+}
+.audio-timing input {
+  min-width: 0;
+  width: 190px;
+  height: 44px;
+  accent-color: #d1b785;
+}
+.cat-replay {
+  position: absolute;
+  bottom: -23px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 4;
+}
+.room-stage:has(.cat-replay) {
+  margin-bottom: 28px;
+}
+.cat-message {
+  bottom: 1%;
+}
+.chapter-next,
+.museum-back {
+  font-size: 14px;
+}
+.quiet-chapter .unknown {
+  font-size: 15px;
+}
+.quiet-chapter .prose {
+  font-size: 18px;
+}
+.ending-lines p {
+  font-size: 18px;
+}
+.site-header .language-toggle button {
+  min-width: 44px;
+}
+@media (max-width: 800px) {
+  .opening-layout .room-stage {
+    margin-top: 12px;
+    margin-bottom: 14px;
+    max-height: none;
+  }
+  .opening-layout .room-heading > p {
+    font-size: 16px;
+  }
+  .opening-copy > p {
+    font-size: 16px;
+    line-height: 1.8;
+    white-space: normal;
+  }
+  .opening-footnote {
+    font-size: 12px;
+  }
+  .opening-layout .room-stage {
+    max-width: 430px;
+  }
+  .opening-layout .room-heading h1 {
+    font-size: 58px;
+  }
+  .room-caption {
+    font-size: 10px;
+    gap: 12px;
+  }
+  .room-caption > span:first-child {
+    font-size: 10px;
+  }
+  .wordmark span {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+  }
+  .site-header {
+    height: 90px;
+  }
+  .opening .site-header {
+    height: 90px;
+  }
+  .opening-copy .primary-button {
+    font-size: 15px;
+  }
+  .museum-layout .room-heading > p {
+    font-size: 15px;
+  }
+  .explore-hint {
+    font-size: 12px;
+  }
+  .progress {
+    font-size: 12px;
+  }
+  .progress p {
+    font-size: 14px;
+  }
+  .card-body {
+    font-size: 16px;
+  }
+  .card-metadata {
+    font-size: 12px;
+  }
+  .card-top {
+    font-size: 10px;
+  }
+  .card-language button {
+    min-width: 44px;
+    font-size: 11px;
+  }
+  .card-close {
+    font-size: 13px;
+  }
+  .quiet-content > .eyebrow {
+    font-size: 10px;
+  }
+  .quiet-chapter .unknown {
+    font-size: 15px;
+  }
+  .quiet-chapter .prose {
+    font-size: 17px;
+  }
+  .ending-lines p {
+    font-size: 17px;
+  }
+  .voice-note > p {
+    font-size: 16px;
+  }
+  .voice-placeholder p {
+    font-size: 17px;
+  }
+  .voice-placeholder small {
+    font-size: 14px;
+  }
+  .voice-note .eyebrow,
+  .ending .eyebrow {
+    font-size: 11px;
+  }
+  .voice-next,
+  .audio-button {
+    font-size: 15px;
+  }
+  .museum-back {
+    font-size: 13px;
+  }
+  .cat-replay {
+    font-size: 12px;
+  }
+  .chapter-next {
+    font-size: 14px;
+  }
+  .cat-message {
+    font-size: 13px;
+  }
+  .museum-footer {
+    margin-top: 28px;
+  }
+  .room-heading .eyebrow {
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .final-cat .ending-vignette .object-art {
+    transform-origin: 60% 70%;
+    animation: cat-notices-door 1.2s 1s ease both;
+  }
+}
+@keyframes cat-notices-door {
+  to {
+    transform: rotate(5deg);
+  }
+}

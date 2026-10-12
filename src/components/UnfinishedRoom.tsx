@@ -4,14 +4,17 @@ import type { Language } from "../content/museumContent";
 import { useReducedMotion } from "../hooks/useMuseumState";
 import { ObjectArt } from "./ObjectArt";
 import { RoomIllustration } from "./RoomIllustration";
+import { Invitation } from "../chapter/Invitation";
 import { VoiceNote } from "./VoiceNote";
 
 function Ending({
   language,
   onCat,
+  onAfterHours,
 }: {
   language: Language;
   onCat: () => void;
+  onAfterHours: () => void;
 }) {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(reduced ? ending.length + 1 : 1);
@@ -34,6 +37,17 @@ function Ending({
   return (
     <div className="ending">
       <span className="eyebrow">{words.endingLabel[language]}</span>
+      {!reduced && visible <= ending.length && (
+        <button
+          className="text-button"
+          onClick={() => {
+            setVisible(ending.length + 1);
+            setCat(true);
+          }}
+        >
+          {words.next[language]} →
+        </button>
+      )}
       <div className="ending-lines">
         {ending.map((line, i) => (
           <p
@@ -75,6 +89,7 @@ function Ending({
             <ObjectArt id="cat" />
           </div>
           <small>{words.collection[language]}</small>
+          <Invitation language={language} onEnter={onAfterHours} />
         </div>
       )}
     </div>
@@ -83,13 +98,20 @@ function Ending({
 export function UnfinishedRoom({
   language,
   onBack,
+  onAfterHours,
+  onUnlock,
 }: {
   language: Language;
   onBack: () => void;
+  onAfterHours: () => void;
+  onUnlock: () => void;
 }) {
   const [step, setStep] = useState(0);
   const [finalCat, setFinalCat] = useState(false);
-  const showCat = useCallback(() => setFinalCat(true), []);
+  const showCat = useCallback(() => {
+    setFinalCat(true);
+    onUnlock();
+  }, [onUnlock]);
   const [revealed, setRevealed] = useState(0);
   const reduced = useReducedMotion();
   const heading = useRef<HTMLHeadingElement>(null);
@@ -147,11 +169,16 @@ export function UnfinishedRoom({
           {step === 3 && (
             <VoiceNote language={language} onContinue={() => setStep(4)} />
           )}
-          {step === 4 && <Ending language={language} onCat={showCat} />}
+          {step === 4 && (
+            <Ending
+              language={language}
+              onCat={showCat}
+              onAfterHours={onAfterHours}
+            />
+          )}
           {step < 3 && (
             <button
-              className={`text-button chapter-next ${step === 0 && revealed < 3 && !reduced ? "unrevealed" : ""}`}
-              disabled={step === 0 && revealed < 3 && !reduced}
+              className="text-button chapter-next"
               onClick={() => setStep((s) => s + 1)}
             >
               {words.next[language]} <span aria-hidden="true">→</span>

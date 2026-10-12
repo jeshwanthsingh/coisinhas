@@ -1,7 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import { words } from "./content/museumContent";
 import type { ObjectId } from "./content/museumContent";
-import { useMuseumState } from "./hooks/useMuseumState";
+import { AfterHours } from "./chapter/AfterHours";
+import { chapterCopy } from "./chapter/content";
+import { freshChapter, validChapter, advanceChapter } from "./chapter/state";
+import type { ChapterEvent } from "./chapter/state";
+import { useMuseumState, useSaved } from "./hooks/useMuseumState";
 import { MuseumRoom } from "./components/MuseumRoom";
 import { ObjectCard } from "./components/ObjectCard";
 import { ProgressCounter } from "./components/ProgressCounter";
@@ -10,6 +14,27 @@ import { UnfinishedRoom } from "./components/UnfinishedRoom";
 export default function App() {
   const { language, setLanguage, found, discover, secretTaps, setSecretTaps } =
     useMuseumState();
+  const [chapter, setChapter] = useSaved(
+    "coisinhas.after-hours.v1",
+    freshChapter(),
+    validChapter,
+  );
+  const dispatchChapter = useCallback(
+    (event: ChapterEvent) => setChapter((old) => advanceChapter(old, event)),
+    [setChapter],
+  );
+  const unlockChapter = useCallback(
+    () => dispatchChapter({ type: "unlock" }),
+    [dispatchChapter],
+  );
+  const [afterHours, setAfterHours] = useState(false);
+  const [returningVisitor] = useState(() => found.length === 6);
+  function enterChapter() {
+    dispatchChapter({ type: "visit" });
+    setEntered(true);
+    setAfterHours(true);
+    setQuiet(false);
+  }
   const [entered, setEntered] = useState(false);
   const [quiet, setQuiet] = useState(false);
   const [card, setCard] = useState<ObjectId | "secret" | null>(null);
@@ -51,8 +76,22 @@ export default function App() {
           </button>
         </div>
       </header>
-      {quiet ? (
+      {afterHours ? (
+        <AfterHours
+          language={language}
+          onLanguage={setLanguage}
+          state={chapter}
+          dispatch={dispatchChapter}
+          onExit={() => {
+            setAfterHours(false);
+            setQuiet(false);
+            window.scrollTo({ top: 0, behavior: "instant" });
+          }}
+        />
+      ) : quiet ? (
         <UnfinishedRoom
+          onUnlock={unlockChapter}
+          onAfterHours={enterChapter}
           language={language}
           onBack={() => {
             setQuiet(false);
@@ -123,7 +162,12 @@ export default function App() {
           )}
         </main>
       )}
-      {!quiet && (
+      {!quiet && !afterHours && (returningVisitor || chapter.unlocked) && (
+        <button className="text-button chapter-shortcut" onClick={enterChapter}>
+          ✧ {chapterCopy.shortcut[language]}
+        </button>
+      )}
+      {!quiet && !afterHours && (
         <div className="room-caption" aria-hidden="true">
           <span>01 — 02</span>
           <span>{words.endingLabel[language]}</span>

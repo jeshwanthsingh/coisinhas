@@ -4,6 +4,7 @@ import { objects, words } from "../content/museumContent";
 import type { Language, ObjectId } from "../content/museumContent";
 import { useReducedMotion } from "../hooks/useMuseumState";
 import { RoomIllustration } from "./RoomIllustration";
+import { chapterCopy } from "../chapter/content";
 import { ObjectArt } from "./ObjectArt";
 
 type Props = {
@@ -183,6 +184,14 @@ export function MuseumRoom({
           <i />
         </div>
       </div>
+      {entered && catFound && (
+        <button
+          className="text-button cat-replay"
+          onClick={() => onDiscover("cat")}
+        >
+          {chapterCopy.replayCat[language]}
+        </button>
+      )}
       <div className="cat-message" role="status">
         {message === "catMove"
           ? words.catMove[language]

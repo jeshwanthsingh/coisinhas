@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { Language } from "../content/museumContent";
+import { chapterCopy } from "../chapter/content";
 import { words } from "../content/museumContent";
 
 export function VoiceNote({
@@ -10,25 +11,13 @@ export function VoiceNote({
   onContinue: () => void;
 }) {
   const audio = useRef<HTMLAudioElement>(null);
-  const [available, setAvailable] = useState<boolean | null>(null);
+  const [available, setAvailable] = useState(__HAS_VOICE_NOTE__);
   const [playing, setPlaying] = useState(false);
   const [heard, setHeard] = useState(false);
   const [error, setError] = useState(false);
   const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(0);
   const source = `${import.meta.env.BASE_URL}audio/coisinhas.m4a`;
-  useEffect(() => {
-    const controller = new AbortController();
-    fetch(source, { method: "HEAD", signal: controller.signal })
-      .then((response) => {
-        const type = response.headers.get("content-type") ?? "";
-        setAvailable(response.ok && !type.includes("text/html"));
-      })
-      .catch(() => {
-        if (!controller.signal.aborted) setAvailable(false);
-      });
-    return () => controller.abort();
-  }, [source]);
   async function toggle() {
     if (!audio.current) return;
     if (playing) {
@@ -105,10 +94,19 @@ export function VoiceNote({
             {playing ? words.voicePause[language] : words.voicePlay[language]}
           </button>
           <div className="audio-timing">
-            <progress
-              value={current}
+            <input
+              type="range"
+              min="0"
               max={duration || 1}
-              aria-label={words.voiceTitle[language]}
+              step="0.1"
+              value={current}
+              disabled={!duration}
+              aria-label={chapterCopy.seek[language]}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                if (audio.current) audio.current.currentTime = value;
+                setCurrent(value);
+              }}
             />
             <span>
               {time(current)} / {time(duration)}
@@ -118,12 +116,8 @@ export function VoiceNote({
       ) : (
         <div className="voice-placeholder">
           <span>⌁</span>
-          <p>
-            {available === null
-              ? words.voiceChecking[language]
-              : words.voicePlaceholder[language]}
-          </p>
-          {available === false && <small>{words.voiceMissing[language]}</small>}
+          <p>{chapterCopy.voiceQuiet[language]}</p>
+          <small>{chapterCopy.voiceLater[language]}</small>
         </div>
       )}
       {error && <p role="alert">{words.voiceError[language]}</p>}

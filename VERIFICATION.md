@@ -90,3 +90,111 @@ The visual pass led to stronger certificate language contrast, a smaller desktop
 4. The 7–10 minute combined experience remains a design target, not a measured visitor study.
 
 GitHub Pages should be assumed publicly reachable; noindex is not access control.
+
+
+# Verification record — chapter three: Jogador 2
+
+Verified locally on **2026-10-20**, extending baseline `e0f2ba7`. Chapter three is **uncommitted, not pushed, and not deployed**. Existing Pages settings and hosted deployment were not changed or rechecked.
+
+## Phase gates
+
+The required `npm run lint && npm test && npm run build` sequence passed after each implementation phase, before work began on the next:
+
+| Phase | Result |
+| --- | --- |
+| 1 — state, title, hub, moon, entry | lint clean; 13 tests; production build passed |
+| 2 — Extraction, letters, optional backup | lint clean; 14 tests; production build passed |
+| 3 — needs, cheat, local frame | lint clean; 14 tests; production build passed |
+| 4 — tree, daily notes, hearts, memories | lint clean; 14 tests; production build passed |
+| 5 — achievements, credits, postcard | lint clean; 19 tests; production build passed |
+| 6 — review, browser checks, docs | lint clean; 20 tests; production build passed |
+
+State tests were first run against a stub reducer and failed as expected before implementation. During final review, an additional regression test exposed acceptance of impossible unselected/extracted saves; the validator was tightened and the test passed. Final tests include all five unchanged chapter-two tests, plus chapter-three gating, deduplication, date guards, 28-stage/10-heart caps, first-day completion, invalid saves, independent old state, cooldown, timezone/DST, lunar phase math, and normalized SHA-256 comparisons.
+
+Final production output is approximately **338.91 kB JS / 108.95 kB gzip** and **59.03 kB CSS / 14.50 kB gzip**, including all three chapters. No runtime dependency or lockfile change. `git diff --check` passed. Existing chapter-one/two copy, original state modules/keys, hooks, audio handling, and Pages workflow are unchanged. The chapter-two UI diff only accepts and renders a doorway after the existing letter continuation. No personal audio file was added; generated assets remain relative and noindex metadata remains present.
+
+## Production browser evidence
+
+Served the actual production build at **`http://127.0.0.1:4183/coisinhas/`**, through a static server with the repository name in the path. Used Playwright Chromium, including isolated mobile touch contexts. Chapter-two completion fixtures were used to enter the new chapter; new progress was then earned through actual controls. A separate doorway check began with the chapter-two letter unread and completed its existing buttons.
+
+| Area | Observed result |
+| --- | --- |
+| Entry | Fresh visitor has no chapter-three shortcut; unread chapter-two letter has no doorway; its continuation reveals the doorway and opens the save screen |
+| Save slots / hub | Karol selectable; Jesh inactive; three scene controls and progress work; ending disabled before completion |
+| Moon | Transition appears, current phase caption renders, southern drawing rotates 180 degrees; skip works; reduced motion omits transition |
+| Modo Karol | All four care buttons fill their respective needs in a touch flow; cap at 100; moodlets change; unknown cheat rejects; mixed-case/space-padded `dengolode` fills all bars |
+| Her frame | Editable note persists; WhatsApp URL contains the exact encoded note and no phone number; link was inspected, not sent |
+| Extraction | Native range End key reaches destination; next-step touch alternative completes five steps; all five memory cards and all four letters open and close |
+| Dialogs | Native modal, PT/EN changes inside, Escape closes and restores trigger focus; tabbing never reaches background controls (Chromium may tab to browser chrome between cycles) |
+| Garden | First watering advances and disables repeat; gift card plus first watering completes scene; a simulated Curitiba-midnight boundary permits exactly the next calendar date |
+| Memories | Heart threshold gates; reduced motion shows all lines immediately; final keep button records the memory |
+| Ending | Full first-day journey unlocks with five hearts; first hug stays locked 0/1; credits render; keyboard focus moves to the credits heading; replay retains all progress |
+| Persistence | Language, needs, loot, extraction, note, garden, and ending survive refresh under the project subpath; chapter-two saved state unchanged by chapter-three walkthrough |
+| Invalid/blocked storage | Malformed chapter-three JSON falls back safely; denied chapter-three reads/writes still allow an in-memory visit and cheat interaction without uncaught errors |
+| Keyboard | Tab/Enter-only entry, hub navigation, extraction steps, envelope opening; visible focus outline; Escape/focus restoration; range keyboard support |
+| Reduced motion | No active animations observed in credits; interstitial omitted; memory prose static |
+| Default network | No external requests, HTTP error responses, or uncaught application errors in the monitored touch walkthrough; absent backup button confirmed |
+
+## Optional feature fixtures
+
+A separate **gitignored fixture build** substituted a test-only postcard hash and test-only ntfy topic. It did not modify production source constants or the default `dist/` configuration.
+
+- A trimmed, case-insensitive matching word used real browser Web Crypto and opened the postcard dialog. English switching worked. The shipped all-zero hash remains inactive.
+- Intercepted ntfy requests verified the POST body `dengo solicitado ✧`, success message, immediate cooldown, reload persistence, retry after ten minutes, and a graceful 503 error. **No real notification was sent.** No external WhatsApp handoff was performed.
+- A local cooldown is intentionally not authentication, authorization, or server-side rate limiting. The README explains the public topic and public bundled-letter limitations.
+
+## Layout and visual inspection
+
+Checked the hub and all three activities at **375×812, 390×812, 430×812, and 1440×900**. Title, ending, and dialog screenshots were also captured at mobile size; desktop captures cover the hub and activities/achievements. No horizontal document overflow was observed. New rendered buttons and form controls measured at least approximately 44×44 CSS pixels. Shorter displays scroll naturally.
+
+Actual screenshots were captured and inspected, including title, hub, needs/frame, Extraction, argument letter, garden, credits, and desktop layouts. The pass aligned the moving light exactly with the drawn route, prevented overlap between hub hit areas, and set the cheat input to 16px to avoid iPhone’s small-input zoom behavior. Reduced-motion screenshots were used for stable layout inspection; an early moon capture caught its fade-in and should not be used as a final artwork reference.
+
+Evidence is kept locally under **`output/playwright/chapter-three/`** (gitignored), including:
+
+- `title-375.png`, `hub-375.png`, `hub-1440.png`
+- `mode-375.png`, `karol-mode-1440.png`
+- `extraction-375.png`, `extraction-mission-1440.png`, `fight-375.png`
+- `farm-375.png`, `little-farm-1440.png`
+- `achievements-375.png`, `achievements-1440.png`, `credits-375.png`
+- `doorway-375.png`, `touch-complete-375.png`, `keyboard-375.png`, `moon-final-375.png`, `hub-final-1440.png`
+- `postcard-fixture-375.png` (placeholder letter with test-only unlock)
+- `checks.js`, `keyboard-storage.js`, `optional.js`, `final-browser-check.log`
+
+## Remaining owner checks
+
+1. Replace the two `TODO(jesh)` items: postcard hash (`src/chapter3/postcard.ts`) and personal bilingual postcard letter (`src/chapter3/content.ts`). Hash generation is documented in README.
+2. Review the tender/teasing copy, especially `letters.fight`; it is deliberately easy to edit. No other personal facts need to be invented to finish the current flow.
+3. Physical iPhone Safari, VoiceOver, real WhatsApp handling, and real ntfy device delivery were **not** tested. Chromium touch/keyboard checks do not establish these results.
+4. Lunar phase is a documented synodic approximation, not an astronomical ephemeris or exact horizon orientation. Real visitors’ reading duration was not measured.
+5. GitHub-hosted refresh/deployment has not been verified for this unpushed chapter; the production project-subpath check was local. No voice recording was added or tested in this task.
+
+
+## Follow-up: repeated “I’m already here” screen — 2026-10-20
+
+Retested the running development site at `http://127.0.0.1:5173/` with Playwright Chromium after the owner reported seeing the moon screen before every game. No application behavior was changed in this audit. Tests used isolated browser contexts and did not change the owner’s in-app browser saves.
+
+**Finding:** this is the programmed interstitial, not a return to Karol’s save slot and not real resource-loading latency. `Player2.enter()` sets a pending destination for every transition; `MoonLoading` completes it after 1,400 ms. It also appears when returning to the hub. The selected game’s title is already visible during the interstitial, which can make the repeated screen feel like an unexpected intermediate page. Showing it only on chapter entry would reduce repetition, but would change the originally requested between-scenes behavior; this audit leaves that decision unchanged.
+
+| Automatic transition | 375×812 | 1440×900 |
+| --- | ---: | ---: |
+| Karol mode | 1,561 ms | 1,829 ms |
+| Extraction mission | 1,525 ms | 1,874 ms |
+| Little farm | 1,469 ms | 1,834 ms |
+
+Measurements run from the Playwright click command to visible game content and include browser/automation overhead, rather than measuring only the 1,400 ms timer.
+
+Additional checks passed:
+
+- All three illustrated-object targets and text navigation alternatives enter the correct game. Skip by button or Enter completes without waiting for the full timer; measured skip checks were below 900 ms including automation.
+- Eighteen rapid double-click/skip/back round trips across mobile and desktop caused no wrong destinations or stale navigation. Focus returns to the correct room object and moves to the game heading after entry.
+- Switching PT/EN during loading, enabling reduced motion mid-transition, and reloading during loading do not strand the app. Reduced motion skips the interstitial for all three games.
+- Actual mobile taps fill all four needs, collect all five loot items, open all five memory cards and all four letters, water the tree, view the gift card, unlock first-day achievements, and reach/replay credits.
+- Unknown cheats reject; whitespace/case-normalized `dengolode` works. The note enforces 280 characters, survives refresh, and produces the exact encoded WhatsApp draft URL without sending anything.
+- Extraction resumes at its saved 40-percent pickup checkpoint; replaying the route does not duplicate loot or hearts. Watering stays disabled after a same-day reload. Needs, note, language, and full scene progress persist.
+- Bilingual dialogs close with Escape and restore focus. Keyboard-only entry/navigation and denied-storage checks passed. Original chapter-two state remained unchanged through the new chapter flow.
+- No horizontal overflow or undersized chapter controls in the tested activity layouts at 375, 390, 430, and 1440 pixels. Inspected fresh mobile screenshots of the repeated moon screen, Modo Karol, and garden.
+- No uncaught application errors or HTTP error responses in monitored transition/gameplay contexts. No external requests during the default touch walkthrough.
+
+Reran `npm run lint`, `npm test` (20/20), and `npm run build`: all passed. No commits or pushes. Physical iPhone Safari and VoiceOver remain untested.
+
+Scripts, CLI logs, and screenshots for this follow-up are in the gitignored `output/playwright/karol-audit/` directory: `transitions.js`, `transitions.log`, `games-check.js`, `games-check.log`, `edges.js`, `edges.log`, and the mobile/desktop scene captures.

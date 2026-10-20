@@ -11,6 +11,15 @@ import { ObjectCard } from "./components/ObjectCard";
 import { ProgressCounter } from "./components/ProgressCounter";
 import { UnfinishedRoom } from "./components/UnfinishedRoom";
 
+import { Player2 } from "./chapter3/Player2";
+import {
+  freshPlayer2,
+  validPlayer2,
+  advance,
+  type Player2Event,
+} from "./chapter3/state";
+import { c as playerCopy } from "./chapter3/content";
+
 export default function App() {
   const { language, setLanguage, found, discover, secretTaps, setSecretTaps } =
     useMuseumState();
@@ -27,6 +36,23 @@ export default function App() {
     () => dispatchChapter({ type: "unlock" }),
     [dispatchChapter],
   );
+  const [player, setPlayer] = useSaved(
+    "coisinhas.player2.v1",
+    freshPlayer2(),
+    validPlayer2,
+  );
+  const dispatchPlayer = useCallback(
+    (event: Player2Event) => setPlayer((old) => advance(old, event)),
+    [setPlayer],
+  );
+  const [playerView, setPlayerView] = useState(false);
+  function enterPlayer() {
+    if (!chapter.letter) return;
+    setEntered(true);
+    setAfterHours(false);
+    setQuiet(false);
+    setPlayerView(true);
+  }
   const [afterHours, setAfterHours] = useState(false);
   const [returningVisitor] = useState(() => found.length === 6);
   function enterChapter() {
@@ -76,8 +102,17 @@ export default function App() {
           </button>
         </div>
       </header>
-      {afterHours ? (
+      {playerView ? (
+        <Player2
+          language={language}
+          onLanguage={setLanguage}
+          state={player}
+          dispatch={dispatchPlayer}
+          onExit={() => setPlayerView(false)}
+        />
+      ) : afterHours ? (
         <AfterHours
+          onPlayer2={enterPlayer}
           language={language}
           onLanguage={setLanguage}
           state={chapter}
@@ -162,12 +197,23 @@ export default function App() {
           )}
         </main>
       )}
-      {!quiet && !afterHours && (returningVisitor || chapter.unlocked) && (
-        <button className="text-button chapter-shortcut" onClick={enterChapter}>
-          ✧ {chapterCopy.shortcut[language]}
+      {!quiet &&
+        !afterHours &&
+        !playerView &&
+        (returningVisitor || chapter.unlocked) && (
+          <button
+            className="text-button chapter-shortcut"
+            onClick={enterChapter}
+          >
+            ✧ {chapterCopy.shortcut[language]}
+          </button>
+        )}
+      {!quiet && !afterHours && !playerView && chapter.letter && (
+        <button className="text-button chapter-shortcut" onClick={enterPlayer}>
+          ✧ {playerCopy.shortcut[language]}
         </button>
       )}
-      {!quiet && !afterHours && (
+      {!quiet && !afterHours && !playerView && (
         <div className="room-caption" aria-hidden="true">
           <span>01 — 02</span>
           <span>{words.endingLabel[language]}</span>

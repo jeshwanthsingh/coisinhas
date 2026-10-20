@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --max-warnings 0",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "tsc src/chapter/state.ts --outDir .test-dist --module esnext --target es2022 --skipLibCheck && node --test tests/*.test.mjs"
+    "test": "tsc src/chapter/state.ts --outDir .test-dist --module esnext --target es2022 --skipLibCheck && tsc src/chapter3/state.ts src/chapter3/time.ts src/chapter3/postcard.ts --outDir .test-dist/player2 --module esnext --target es2022 --skipLibCheck && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

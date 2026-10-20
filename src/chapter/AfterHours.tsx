@@ -11,6 +11,7 @@ import { Atlas } from "./Atlas";
 import { Letter } from "./Letter";
 import { Certificate } from "./Certificate";
 import "./chapter.css";
+import { Doorway } from "../chapter3/Doorway";
 type Scene = "room" | "radio" | "windows" | "atlas" | "letter";
 export function AfterHours({
   language,
@@ -18,7 +19,9 @@ export function AfterHours({
   dispatch,
   onExit,
   onLanguage,
+  onPlayer2,
 }: {
+  onPlayer2: () => void;
   language: Language;
   onLanguage: (language: Language) => void;
   state: ChapterState;
@@ -211,6 +214,11 @@ export function AfterHours({
           )}
           {scene === "letter" && (
             <Letter
+              afterLetter={
+                state.letter ? (
+                  <Doorway language={language} onEnter={onPlayer2} />
+                ) : undefined
+              }
               language={language}
               onComplete={() => dispatch({ type: "letter" })}
             />

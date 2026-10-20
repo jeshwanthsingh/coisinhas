@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import type { Language } from "../content/museumContent";
 import { chapterCopy as c } from "./content";
 import { EnvelopeArt } from "./Artwork";
 export function Letter({
   language,
   onComplete,
+  afterLetter,
 }: {
+  afterLetter?: ReactNode;
   language: Language;
   onComplete: () => void;
 }) {
@@ -53,6 +55,7 @@ export function Letter({
           )}
         </article>
       )}
+      {end && afterLetter}
     </div>
   );
 }

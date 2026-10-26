@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import type { Language } from "../content/museumContent";
 import { useReducedMotion } from "../hooks/useMuseumState";
 import { c } from "./content";
@@ -11,7 +18,16 @@ import { Farm } from "./Farm";
 import { KarolMode } from "./KarolMode";
 import { Extraction } from "./Extraction";
 import "./chapter3.css";
-export type Scene = "title" | "hub" | "mode" | "extraction" | "farm" | "ending";
+const SundayExperience = lazy(() => import("../sunday/SundayExperience"));
+import { c as sundayCopy } from "../sunday/content";
+export type Scene =
+  | "title"
+  | "hub"
+  | "mode"
+  | "extraction"
+  | "farm"
+  | "ending"
+  | "sunday";
 export type SceneProps = {
   language: Language;
   state: Player2State;
@@ -35,7 +51,9 @@ export function Player2({
   const [pending, setPending] = useState<Scene | null>(null);
   const reduced = useReducedMotion();
   const heading = useRef<HTMLHeadingElement>(null);
-  const last = useRef<"mode" | "extraction" | "farm" | "ending">("mode");
+  const last = useRef<"mode" | "extraction" | "farm" | "ending" | "sunday">(
+    "mode",
+  );
   const buttons = useRef<Partial<Record<Scene, HTMLButtonElement | null>>>({});
   useEffect(() => {
     if (pending) return;
@@ -58,8 +76,8 @@ export function Player2({
   }, [pending]);
   function enter(next: Scene) {
     if (next !== "title" && next !== "hub") last.current = next;
-    if (reduced) setScene(next);
-    else setPending(next);
+    if (scene === "title" && next === "hub" && !reduced) setPending(next);
+    else setScene(next);
   }
   const titles = {
     title: c.continueTitle,
@@ -68,7 +86,28 @@ export function Player2({
     extraction: c.extraction,
     farm: c.farm,
     ending: c.ending,
+    sunday: sundayCopy.title,
   };
+  if (scene === "sunday")
+    return (
+      <Suspense
+        fallback={
+          <main>
+            <p>{sundayCopy.loading[language]}</p>
+            <button onClick={() => enter("hub")}>
+              {sundayCopy.hub[language]}
+            </button>
+          </main>
+        }
+      >
+        <SundayExperience
+          language={language}
+          onLanguage={onLanguage}
+          onExit={() => enter("hub")}
+          onMuseum={onExit}
+        />
+      </Suspense>
+    );
   return (
     <main className={`player2 p2-${scene}`}>
       <header className="p2-header">

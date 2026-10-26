@@ -1,0 +1,695 @@
+/* A single little apartment. Its materials stay; the daylight changes. */
+.sunday {
+  --sun-wall: #bcb4a4;
+  --sun-side: #a59f98;
+  --sun-floor: #ab9581;
+  --sun-sky-top: #aebfc8;
+  --sun-sky-bottom: #e3d7ba;
+  --sun-horizon: #a5b3a1;
+  --sun-paper: #e2d3b7;
+  --sun-ink: #293242;
+  --sun-accent: #d5b47b;
+  color: var(--sun-paper);
+  max-width: 1100px;
+  margin: 28px auto 45px;
+  line-height: 1.7;
+}
+.sunday.sun-rain {
+  --sun-sky-top: #82949f;
+  --sun-sky-bottom: #c6c9c0;
+  --sun-wall: #ada99f;
+}
+.sunday.sun-afternoon {
+  --sun-wall: #ccc0a7;
+  --sun-side: #aaa59b;
+  --sun-sky-top: #adc1c8;
+  --sun-sky-bottom: #eee0bf;
+}
+.sunday.sun-sunset {
+  --sun-wall: #b5a095;
+  --sun-side: #998d96;
+  --sun-floor: #a28b80;
+  --sun-sky-top: #9b8da9;
+  --sun-sky-bottom: #efbd88;
+  --sun-horizon: #a48b9b;
+}
+.sunday.sun-evening {
+  --sun-wall: #515564;
+  --sun-side: #424959;
+  --sun-floor: #6f6264;
+  --sun-sky-top: #26334d;
+  --sun-sky-bottom: #596079;
+  --sun-horizon: #424c60;
+  --sun-paper: #e2d3b7;
+}
+.sunday button,
+.sunday textarea {
+  font: inherit;
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+.sunday button:focus-visible,
+.sunday a:focus-visible,
+.sunday input:focus-visible {
+  outline: 2px solid #e2bc80;
+  outline-offset: 5px;
+}
+.sunday button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.sun-header {
+  max-width: 750px;
+  text-align: center;
+  margin: 0 auto 22px;
+}
+.sun-header h1 {
+  font:
+    400 clamp(30px, 4vw, 43px) / 1.14 Georgia,
+    serif;
+  letter-spacing: -1px;
+  margin: 14px auto;
+}
+.sun-header > p {
+  font:
+    italic 18px/1.65 Georgia,
+    serif;
+  color: #b9b2b8;
+}
+.sunday .sun-text {
+  background: none;
+  color: #c8b8c7;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+.sunday .sun-back {
+  display: block;
+  margin: 24px auto;
+}
+.sun-world {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 35px;
+}
+.sun-apartment {
+  position: relative;
+  min-width: 0;
+}
+.sun-room-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.sun-room-svg path,
+.sun-room-svg stop {
+  transition:
+    fill 1.1s ease,
+    stop-color 1.1s ease,
+    opacity 0.6s ease;
+}
+.sun-controls {
+  max-width: 460px;
+  min-width: 0;
+  padding: 22px 12px 24px 0;
+}
+.sun-controls h2,
+.sun-controls h3 {
+  font:
+    400 25px/1.35 Georgia,
+    serif;
+  margin: 0 0 20px;
+}
+.sun-controls p {
+  white-space: pre-line;
+  margin: 12px 0;
+  font-size: 16px;
+}
+.sun-story p {
+  font:
+    400 23px/1.6 Georgia,
+    serif;
+  margin: 0 0 20px;
+  animation: sun-appear 0.35s ease both;
+}
+.sunday .sun-next {
+  background: #d6b983;
+  color: #293242;
+  border: 1px solid #e6cda3;
+  border-radius: 4px 9px 4px 5px;
+  box-shadow: 0 3px 0 #8b795e;
+  padding: 12px 20px;
+  min-height: 48px;
+  margin: 12px 0;
+  font-size: 15px;
+}
+.sun-next > span {
+  margin-left: 12px;
+}
+.sun-weather-charms {
+  position: absolute;
+  left: 47%;
+  top: 16%;
+  display: flex;
+  gap: 12px;
+}
+.sunday .sun-weather-charm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #e2d3b7;
+  color: #344251;
+  box-shadow: 0 3px 0 #6c7375;
+  border: 1px solid #a69c89;
+  border-radius: 2px 2px 20px 20px;
+  width: 64px;
+  padding: 6px 4px 8px;
+  font-size: 13px;
+}
+.sun-weather-charm:before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  height: 22px;
+  width: 1px;
+  background: #817c78;
+}
+.sun-weather-charm svg {
+  width: 40px;
+}
+.sun-weather-charm[aria-pressed="true"] {
+  outline: 2px solid #68516c;
+  outline-offset: 3px;
+}
+.sunday .sun-hotspot {
+  position: absolute;
+  background: none;
+  border: 1px solid transparent;
+  color: #f0d39e;
+  border-radius: 12px;
+  font-size: 26px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+}
+.sun-hotspot:hover,
+.sun-hotspot:focus-visible {
+  background: #e2d3b71a;
+}
+.sun-hotspot span {
+  text-shadow: 0 1px 5px #343443;
+}
+.sun-hotspot-food {
+  left: 22%;
+  top: 65%;
+  width: 26%;
+  height: 15%;
+}
+.sun-hotspot-tv {
+  left: 8%;
+  top: 37%;
+  width: 22%;
+  height: 20%;
+}
+.sun-hotspot-game {
+  left: 56%;
+  top: 76%;
+  width: 15%;
+  height: 12%;
+}
+.sun-hotspot-sofa {
+  left: 58%;
+  top: 58%;
+  width: 28%;
+  height: 19%;
+}
+.sun-hotspot-window {
+  left: 44%;
+  top: 42%;
+  width: 28%;
+  height: 13%;
+}
+.sun-hotspot-cat {
+  left: 82%;
+  top: 78%;
+  width: 10%;
+  height: 12%;
+}
+.sun-hotspot-cassette {
+  left: 27%;
+  top: 66%;
+  width: 15%;
+  height: 13%;
+}
+.sun-reply {
+  color: #dac7b1;
+  font:
+    italic 19px/1.7 Georgia,
+    serif !important;
+  animation: sun-appear 0.3s ease both;
+}
+.sun-rain {
+  animation: sun-rain 1.6s linear infinite;
+}
+.sunday.sun-rain {
+  animation: none;
+}
+.sun-leaf-shadow {
+  transform-origin: 70% 50%;
+  animation: sun-leaves 9s ease-in-out infinite alternate;
+}
+.sun-cat-stretch {
+  transform-origin: center;
+  animation: sun-stretch 9s ease-in-out 1;
+}
+.sun-clock-hand {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transition: transform 0.5s ease;
+}
+.sun-clock-hand.snoozed {
+  transform: rotate(300deg);
+}
+.sun-seating {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.sun-couple.lean .sun-figure-one {
+  transform: translateX(24px) rotate(13deg);
+  transform-origin: -35px 65px;
+  transition: transform 0.8s ease;
+}
+.sun-arm-one,
+.sun-arm-two {
+  transition: transform 0.8s ease;
+}
+.sun-couple.hands .sun-arm-one {
+  transform: translateX(19px);
+}
+.sun-couple.hands .sun-arm-two {
+  transform: translateX(-19px);
+}
+.sun-sneaky-hand {
+  transition: transform 0.5s ease;
+}
+.sun-sneaky-hand.waiting {
+  animation: sun-steal 1s ease both;
+}
+.sun-sneaky-hand.share {
+  transform: translate(25px, -10px);
+}
+.sun-sneaky-hand.defend {
+  transform: translate(50px, -16px);
+}
+.sun-defending-fork {
+  animation: sun-fork 0.35s ease both;
+}
+.sun-tv-show.comedy {
+  transform-origin: 150px 320px;
+  animation: sun-laugh 0.35s ease-in-out 5 alternate;
+}
+.sun-tv-show.drama {
+  animation: sun-drama 1s ease both;
+}
+.sun-mini-game.played.coop .sun-pea,
+.sun-mini-game.played.coop .sun-push-one,
+.sun-mini-game.played.coop .sun-push-two {
+  transform: translateX(174px);
+  transition: transform 1s ease;
+}
+.sun-mini-game.played.competitive .sun-pea {
+  transform: translateX(176px);
+  transition: transform 0.2s ease;
+}
+.sun-final-line {
+  font-size: 28px !important;
+}
+.sun-final-story {
+  padding-top: 10px;
+}
+@keyframes sun-appear {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes sun-rain {
+  to {
+    transform: translateY(18px);
+  }
+}
+@keyframes sun-leaves {
+  to {
+    transform: rotate(2deg);
+  }
+}
+@keyframes sun-stretch {
+  0%,
+  80%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.18);
+  }
+}
+@keyframes sun-steal {
+  from {
+    transform: translate(35px, -9px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes sun-fork {
+  from {
+    transform: translateY(-13px);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes sun-laugh {
+  to {
+    transform: translateY(-2px) rotate(1deg);
+  }
+}
+@keyframes sun-drama {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@media (max-width: 750px) {
+  .sunday {
+    margin-top: 18px;
+  }
+  .sun-header {
+    margin-bottom: 4px;
+  }
+  .sun-header h1 {
+    font-size: 36px;
+    max-width: 390px;
+  }
+  .sun-header > p {
+    font-size: 17px;
+    max-width: 280px;
+    margin: 12px auto;
+  }
+  .sun-world {
+    display: block;
+  }
+  .sun-apartment {
+    width: calc(100% + 30px);
+    margin: 0 -15px;
+  }
+  .sun-controls {
+    padding: 5px 8px 16px;
+    margin: auto;
+    max-width: 460px;
+  }
+  .sun-story p {
+    font-size: 21px;
+    margin-bottom: 16px;
+  }
+  .sun-weather-charms {
+    left: 44%;
+    top: 16%;
+    gap: 8px;
+  }
+  .sunday .sun-weather-charm {
+    width: 49px;
+    padding: 2px 2px 6px;
+    font-size: 12px;
+  }
+  .sun-weather-charm svg {
+    width: 31px;
+  }
+  .sun-weather-charm:before {
+    height: 10px;
+  }
+  .sun-controls h2,
+  .sun-controls h3 {
+    font-size: 24px;
+  }
+  .sun-final-line {
+    font-size: 26px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sunday *,
+  .sunday *:before,
+  .sunday *:after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sun-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 20px;
+}
+.sunday .sun-choices button {
+  border: 1px solid #8c7d88;
+  border-radius: 5px;
+  background: #c2a9bd10;
+  color: #dfcdd8;
+  padding: 10px 14px;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+.sunday .sun-choices button[aria-pressed="true"] {
+  background: #b69eac33;
+  border-color: #dabd97;
+  color: #f1d7b1;
+}
+.sun-hint {
+  font-size: 13px !important;
+  color: #bbb0b9;
+}
+.sun-activity-links {
+  display: grid;
+  gap: 4px;
+  margin: 12px 0 24px;
+}
+.sunday .sun-activity-links button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  color: #dfcdb8;
+  background: transparent;
+  border-bottom: 1px solid #8b768733;
+  padding: 12px 0;
+  font:
+    20px Georgia,
+    serif;
+}
+.sun-activity-links button span:last-child {
+  margin-left: auto;
+}
+.sun-controls h3 {
+  margin-top: 25px;
+}
+.sun-controls .sun-text {
+  display: block;
+  margin: 14px 0;
+  padding-left: 0;
+}
+
+.sun-close-choices {
+  flex-direction: column;
+  align-items: stretch;
+}
+.sun-close-choices button {
+  text-align: left;
+}
+.sunday .sun-cassette-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  background: none;
+  color: #d8c4cf;
+  padding: 15px;
+  margin: 0 auto 10px;
+}
+.sun-cassette-button svg {
+  width: 160px;
+  transform: rotate(-3deg);
+}
+.sun-cassette-button span {
+  font-size: 14px;
+}
+.sun-seek {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  color: #bcb0bd;
+  margin: 15px 0;
+}
+.sun-seek input {
+  width: 100%;
+  height: 44px;
+  accent-color: #d6b983;
+}
+.sun-reel.spinning {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sun-reel 4s linear infinite;
+}
+.sun-postcard {
+  position: relative;
+  background: #e0d2b9;
+  color: #414351;
+  padding: 28px 25px 24px;
+  border-radius: 3px 5px 2px 4px;
+  box-shadow: 3px 7px 0 #100e1c33;
+  transform: rotate(-0.5deg);
+  border: 1px solid #c9b69c;
+}
+.sun-postcard h2 {
+  padding-right: 66px;
+  font:
+    24px/1.3 Georgia,
+    serif;
+  margin: 8px 0 22px;
+}
+.sun-postcard p {
+  font:
+    16px/1.75 Georgia,
+    serif;
+  white-space: pre-line;
+  margin: 16px 0;
+}
+.sun-postmark {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 72px;
+  color: #9b858d;
+  transform: rotate(8deg);
+}
+.sun-signature {
+  font:
+    italic 20px/1.5 Georgia,
+    serif !important;
+  text-align: right;
+  margin-top: 22px !important;
+}
+.sun-card-actions {
+  margin-top: 20px;
+}
+.sunday .sun-review {
+  display: block;
+  margin: 25px auto 0;
+}
+.sun-saved-dialog {
+  background: #202837;
+  color: #ddcfb7;
+  border: 1px solid #8e7c8c;
+  border-radius: 5px;
+  padding: 20px;
+  max-width: 530px;
+  width: calc(100% - 26px);
+  max-height: 90dvh;
+  margin: auto;
+  overflow: auto;
+}
+.sun-saved-dialog::backdrop {
+  background: #101521d9;
+}
+.sun-dialog-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.sun-dialog-top button {
+  background: none;
+  color: #d8c4cf;
+  font-size: 13px;
+  padding: 8px;
+}
+.sun-dialog-top [aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.sun-saved-dialog .sun-text {
+  background: none;
+  color: #d8c4cf;
+  padding: 8px 0;
+}
+.sun-saved-dialog .sun-hint {
+  white-space: pre-line;
+}
+.sun-saved-dialog .sun-postcard {
+  transform: none;
+}
+.sun-audio {
+  margin-bottom: 20px;
+}
+@keyframes sun-reel {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 750px) {
+  .sun-postcard {
+    padding: 23px 20px;
+  }
+  .sun-postcard h2 {
+    font-size: 23px;
+  }
+  .sun-saved-dialog {
+    padding: 14px;
+  }
+  .sun-dialog-top {
+    gap: 4px;
+  }
+  .sun-dialog-top button {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sunday *,
+  .sunday *:before,
+  .sunday *:after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.sun-mini-game.competitive .sun-push-one {
+  transform: translateX(160px);
+}
+.sun-mini-game.played.competitive .sun-push-one {
+  transform: translateX(175px);
+  transition: transform 0.2s ease;
+}
+.sun-watching.comedy .sun-couple {
+  animation: sun-laugh 0.4s ease-in-out 5 alternate;
+  transform-origin: center;
+}
+.sun-watching.drama .sun-figure-two {
+  transform: rotate(-9deg);
+  transform-origin: 30px 65px;
+  transition: transform 0.6s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sunday * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

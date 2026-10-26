@@ -198,3 +198,49 @@ Additional checks passed:
 Reran `npm run lint`, `npm test` (20/20), and `npm run build`: all passed. No commits or pushes. Physical iPhone Safari and VoiceOver remain untested.
 
 Scripts, CLI logs, and screenshots for this follow-up are in the gitignored `output/playwright/karol-audit/` directory: `transitions.js`, `transitions.log`, `games-check.js`, `games-check.log`, `edges.js`, `edges.log`, and the mobile/desktop scene captures.
+
+
+## Sunday experience — 2026-10-26
+
+Baseline was clean `main` at `4ba9acc`. Baseline lint, 20 tests and build passed before implementation. This addition is **uncommitted and unpublished**. The existing deployment workflow, App, chapter-one copy, chapter-two reducer, chapter-three reducer and original voice component have no diff from that baseline.
+
+### Implementation phases
+
+1. **Inspect/protect:** confirmed React state navigation, safe storage hooks, relative Vite base and separate chapter keys. Recorded the design and checks in `SUNDAY_PLAN.md`.
+2. **Basic experience:** added an independent strict state model, lazy calendar entry, original SVG apartment and user-paced opening. Inspected the 390px mobile composition before building the interaction branches.
+3. **Meaningful choices:** rain/sun, alarm/cat responses, sushi/pasta with share/defend, comedy/drama and co-op/competitive interactions. Exercised all three activities via visible controls and verified unique saved progress and actual food outcomes.
+4. **Emotional progression:** sofa/window positioning, three closeness states, optional cat, night cassette, deterministic bilingual postcard, local save/review/copy, ending/replay/museum return. Completed full PT/EN journeys.
+5. **Polish:** corrected window-seat occlusion behind the sofa, increased the little game’s size, made leaning visibly meet, hid the daytime sun in rainy weather, tightened the desktop composition and separated overlapping object hit areas. Added explicit Tab wrapping after the keyboard audit found focus could reach browser chrome past the saved-card dialog’s last button.
+6. **Verification:** all commands and browser checks below passed after the relevant fixes. No public deployment or voice recording was created.
+
+### Commands and results
+
+- `npm ci` — passed, 225 packages installed. npm emitted the existing ESLint 9.39.5 support/deprecation notice; no dependency versions were changed as part of this feature.
+- `npm run lint` — passed, zero lint errors/warnings.
+- `npm test` — **30 tests passed**, including all 20 existing tests. Sunday coverage includes gating, all activity types, deduplication, save/resume/replay, immutable state, malformed values, backtracking, all **192 single-activity combinations in both languages**, and multi-activity postcard ordering/outcomes.
+- `npm run build` — passed. Sunday has its own lazy JS/CSS chunks (~29.45 KB JS / 10.06 KB CSS before gzip); no runtime dependency was added.
+- `git diff --check` — passed.
+- Local production server served the unchanged relative-base build at `http://127.0.0.1:4184/coisinhas/`, including lazy chunks. Production journey recorded no page errors or HTTP responses >=400. Refresh and subsequent re-entry resumed the saved Sunday scene.
+
+### Browser proof
+
+Playwright CLI drove Chromium using the actual rendered controls. Local reproducible scripts/logs and screenshots are in ignored `output/playwright/sunday/`:
+
+- `journey.js` / `journey.log`: full journey at **390×844 and 1440×900**, every afternoon branch and variant, both weather/morning choices, both seats, all closeness choices, optional cat, missing audio, saved-card dialog, replay and museum/hub return. PT→EN during an activity and EN→PT during the ending worked. Saving kept the completed snapshot while restart cleared only the current day. Earlier chapter and cat saves remained unchanged.
+- `edges.js` / `edges.log`: direct navigation to/from all three Chapter 3 games with **no moon interstitial**; malformed Sunday JSON recovery; refresh at sunset; return focus to the hub calendar; a full keyboard-only Sunday under reduced motion; zero running Sunday animations in reduced mode; clipboard contents matched the chosen day; 375/430 postcard layout; dialog Tab containment, Escape and focus restoration; a complete visit with all Storage reads/writes throwing; honest save-failure feedback; unchanged Player 2 save.
+- `touch.js` / `touch.log`: fresh mobile Chromium contexts with `hasTouch: true`, `isMobile: true`, DPR 2 at **375×812 and 430×932**. Tapped real room hotspots, changed choices, completed one game, reached the ending without the other activities and returned to the museum. No horizontal overflow or overlapping room-object hit areas during the journey.
+- Measured Sunday buttons at 390/1440: no rendered target below approximately 44×44px. Additional **1280×900** composition/overflow check passed.
+
+### Visual evidence inspected
+
+Inspected all 13 mobile and 13 desktop captures (the required 12 scenes plus leaning), and the additional 375/430 touch/postcard and 1280 desktop captures. Stable captures finish finite animations so text is not photographed halfway through its fade; normal-motion interactions were exercised separately.
+
+`mobile-` and `desktop-` filenames: `01-entrance`, `02-rain`, `03-sun`, `04-food`, `05-tv`, `06-game`, `07-sunset`, `08-hands`, `08b-lean`, `09-quiet`, `10-cassette`, `11-postcard`, `12-ending`. Each has a `.png` extension. Also `touch-375.png`, `touch-430.png`, `postcard-375.png`, `postcard-430.png`, `desktop-1280.png`.
+
+The room remains recognizable from morning to night; text sits outside the illustrated touch areas. Long postcards scroll naturally. No clipped Portuguese text or horizontal overflow was observed. All three closeness choices use equal controls and produce distinct figure arrangements.
+
+### Remaining owner/device checks
+
+- **Owner asset:** optional real `public/audio/domingo.m4a`. No file was fabricated. The absent-file path was tested and makes no audio request; actual play/pause/seek/codec behavior cannot be verified until Jesh supplies the recording. Installation and an editable script are in `DOMINGO_RECORDING_GUIDE.md`.
+- **Not verified:** physical iPhone Safari, VoiceOver, the eventual real audio, real-person reading duration, or hosted GitHub Pages deployment of this unpublished change. Chromium touch emulation is not an iOS Safari claim.
+- No new `TODO(jesh)` placeholders occur in Sunday code. The existing Chapter 3 owner-editable content and unrelated TODOs remain unchanged.

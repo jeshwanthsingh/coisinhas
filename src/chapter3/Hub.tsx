@@ -10,6 +10,7 @@ import {
   type Player2State,
 } from "./state";
 import { clockTime, greeting, SF_ZONE, KAROL_ZONE } from "./time";
+import { SundayEntry } from "../sunday/Entry";
 import { HubArt } from "./Artwork";
 export function Hub({
   language,
@@ -74,6 +75,13 @@ export function Hub({
       <p className="p2-progress" role="status">
         {c.progress[language]} <b>{progressCount(state)}/3</b>
       </p>
+      <SundayEntry
+        language={language}
+        onEnter={() => onEnter("sunday")}
+        buttonRef={(node) => {
+          buttons.current.sunday = node;
+        }}
+      />
       <button
         className="p2-ending-link"
         disabled={!endingReady(state)}

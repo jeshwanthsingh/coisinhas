@@ -262,3 +262,11 @@ Chromium, production build under `/coisinhas/`, 390x844 and 1280x800, new contex
 
 **Not verified:** physical iPhone Safari and VoiceOver; chapter 2/3 progress was seeded in localStorage.
 
+## O Esconderijo, Drop 1.5 — 2026-10-31
+
+Branch `feat/esconderijo-1.5` from `main` at `7f3a240`. `npm run lint`, `npm test` (47/47) and `npm run build` pass. New tests: old-save upgrade, flip dedupe, "3 distinct flips -> ending", unknown flipped ids dropped, malformed saves.
+
+Chromium, production build under `/coisinhas/`: first visit with a pointer hold (an early release resets, no message), a hold by keyboard (Space/Enter), and the tap alternative; descent; crate and tags; flip to the back; the revive hold on "resgates" (early release resets, completion shows the line); the ending after the third different flip on close (not after fewer, not on repeated flips); the pinned-note reread; "subir de novo" replay; an old save (two cards seen, old ending seen) kept its cards, skipped the arrival and played the new ending after 3 flips; PT/EN; reduced motion (single tap, crossfade, lines shown at once). No console errors, no non-local requests, no horizontal overflow, no target under 44px at 390x844 and 1280x800. The hideout was compared side by side with the museum room.
+
+**Not verified:** physical iPhone Safari and VoiceOver (including the 3D flip), long-press behaviour on a real touch screen, real-person reading time.
+

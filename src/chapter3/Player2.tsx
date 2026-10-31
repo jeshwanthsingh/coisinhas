@@ -17,6 +17,8 @@ import { Achievements } from "./Achievements";
 import { Farm } from "./Farm";
 import { KarolMode } from "./KarolMode";
 import { Extraction } from "./Extraction";
+import { n as navCopy } from "../nav/content";
+import type { Place } from "../nav/places";
 import "./chapter3.css";
 const SundayExperience = lazy(() => import("../sunday/SundayExperience"));
 import { c as sundayCopy } from "../sunday/content";
@@ -43,14 +45,31 @@ export function Player2({
   dispatch,
   onExit,
   onLanguage,
+  initialScene = "title",
+  onPlace,
+  onDepois,
 }: {
+  initialScene?: Scene;
+  onPlace?: (place: Place) => void;
+  onDepois?: () => void;
   language: Language;
   state: Player2State;
   dispatch: (e: Player2Event) => void;
   onLanguage: (l: Language) => void;
   onExit: () => void;
 }) {
-  const [scene, setScene] = useState<Scene>("title");
+  const [scene, setScene] = useState<Scene>(initialScene);
+  useEffect(
+    () =>
+      onPlace?.(
+        scene === "sunday"
+          ? "domingo"
+          : scene === "esconderijo"
+            ? "esconderijo"
+            : "jogador2",
+      ),
+    [scene, onPlace],
+  );
   const [pending, setPending] = useState<Scene | null>(null);
   const reduced = useReducedMotion();
   const heading = useRef<HTMLHeadingElement>(null);
@@ -194,9 +213,16 @@ export function Player2({
         />
       )}
       {!pending && (scene === "title" || scene === "hub") && (
-        <button className="p2-link p2-exit" onClick={onExit}>
-          ← {c.exit[language]}
-        </button>
+        <>
+          {onDepois && (
+            <button className="p2-link p2-exit p2-depois" onClick={onDepois}>
+              ← {navCopy.toDepois[language]}
+            </button>
+          )}
+          <button className="p2-link p2-exit" onClick={onExit}>
+            ← {c.exit[language]}
+          </button>
+        </>
       )}
     </main>
   );

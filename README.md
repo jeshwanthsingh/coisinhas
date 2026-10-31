@@ -193,3 +193,17 @@ An optional, permanently growing den in the Jogador 2 hub, available as soon as 
 - **State:** `coisinhas.esconderijo.v1` holds opened card ids and two flags, only in this browser. Unknown ids are dropped, invalid saves start fresh, denied storage still allows the visit. Nothing is sent and nothing measures time or attention.
 - **No audio, no network, no new dependency.**
 
+## Navigation: o mapa and direct links
+
+A small folded-map button next to PT/EN opens a drawer listing only the places already unlocked (nothing locked is shown). Each place has a hash URL, so a refresh stays put and the browser Back button moves between places. There is no router library and no server fallback: `base` stays `./`.
+
+| Link | Opens |
+|---|---|
+| `#museu` | the museum (also the fallback) |
+| `#depois` | Depois do fechamento, only if already unlocked |
+| `#jogador2` | the Jogador 2 hub, only if the chapter-two letter was read (or a direct link below was used) |
+| `#domingo` | O domingo, always |
+| `#esconderijo` | O Esconderijo, always |
+
+`#domingo` and `#esconderijo` work in a fresh browser and also make the Jogador 2 hub reachable (`coisinhas.nav.v1`: a hub flag plus which of the two she has opened). No other chapter is marked complete. Unknown or locked hashes fall back to the museum silently. Logic: `src/nav/places.ts` (tested in `tests/nav-places.test.mjs`); the main-page quiet doors replace the old bottom shortcuts.
+

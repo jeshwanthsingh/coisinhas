@@ -63,9 +63,13 @@ test("hasNew is true only while a published card is unopened", () => {
   assert.equal(hasNew(freshEsconderijo(), ["a"]), true);
 });
 test("production excludes drafts, dev keeps them, newest first", () => {
-  assert.ok(cards.filter((c) => c.draft).length === 3);
-  assert.equal(visibleCards(cards, false).filter((c) => c.draft).length, 0);
-  assert.equal(visibleCards(cards, true).length, cards.length);
+  const withDraft = [{ ...cards[0], id: "d", draft: true }, ...cards];
+  assert.equal(
+    visibleCards(withDraft, false).some((c) => c.draft),
+    false,
+  );
+  assert.equal(visibleCards(withDraft, true).length, cards.length + 1);
+  assert.equal(visibleCards(cards, false).length, cards.length);
   const list = [
     { ...cards[0], id: "old", addedOn: "2026-01-01", draft: undefined },
     { ...cards[0], id: "new", addedOn: "2026-05-01", draft: undefined },

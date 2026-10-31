@@ -20,6 +20,8 @@ import { Extraction } from "./Extraction";
 import "./chapter3.css";
 const SundayExperience = lazy(() => import("../sunday/SundayExperience"));
 import { c as sundayCopy } from "../sunday/content";
+const Esconderijo = lazy(() => import("../esconderijo/Esconderijo"));
+import { c as esconderijoCopy } from "../esconderijo/content";
 export type Scene =
   | "title"
   | "hub"
@@ -27,7 +29,8 @@ export type Scene =
   | "extraction"
   | "farm"
   | "ending"
-  | "sunday";
+  | "sunday"
+  | "esconderijo";
 export type SceneProps = {
   language: Language;
   state: Player2State;
@@ -51,9 +54,9 @@ export function Player2({
   const [pending, setPending] = useState<Scene | null>(null);
   const reduced = useReducedMotion();
   const heading = useRef<HTMLHeadingElement>(null);
-  const last = useRef<"mode" | "extraction" | "farm" | "ending" | "sunday">(
-    "mode",
-  );
+  const last = useRef<
+    "mode" | "extraction" | "farm" | "ending" | "sunday" | "esconderijo"
+  >("mode");
   const buttons = useRef<Partial<Record<Scene, HTMLButtonElement | null>>>({});
   useEffect(() => {
     if (pending) return;
@@ -87,6 +90,7 @@ export function Player2({
     farm: c.farm,
     ending: c.ending,
     sunday: sundayCopy.title,
+    esconderijo: esconderijoCopy.title,
   };
   if (scene === "sunday")
     return (
@@ -105,6 +109,25 @@ export function Player2({
           onLanguage={onLanguage}
           onExit={() => enter("hub")}
           onMuseum={onExit}
+        />
+      </Suspense>
+    );
+  if (scene === "esconderijo")
+    return (
+      <Suspense
+        fallback={
+          <main>
+            <p>…</p>
+            <button onClick={() => enter("hub")}>
+              {esconderijoCopy.hub[language]}
+            </button>
+          </main>
+        }
+      >
+        <Esconderijo
+          language={language}
+          onLanguage={onLanguage}
+          onExit={() => enter("hub")}
         />
       </Suspense>
     );

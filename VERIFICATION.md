@@ -94,7 +94,7 @@ GitHub Pages should be assumed publicly reachable; noindex is not access control
 
 # Verification record — chapter three: Jogador 2
 
-Verified locally on **2026-10-20**, extending baseline `e0f2ba7`. Chapter three is **uncommitted, not pushed, and not deployed**. Existing Pages settings and hosted deployment were not changed or rechecked.
+Verified locally on **2026-10-20**, extending baseline `e0f2ba7`. Chapter three was later committed and deployed (live at `88783d3`, confirmed 2026-10-31). Existing Pages settings and hosted deployment were not changed or rechecked.
 
 ## Phase gates
 
@@ -202,7 +202,7 @@ Scripts, CLI logs, and screenshots for this follow-up are in the gitignored `out
 
 ## Sunday experience — 2026-10-26
 
-Baseline was clean `main` at `4ba9acc`. Baseline lint, 20 tests and build passed before implementation. This addition is **uncommitted and unpublished**. The existing deployment workflow, App, chapter-one copy, chapter-two reducer, chapter-three reducer and original voice component have no diff from that baseline.
+Baseline was clean `main` at `4ba9acc`. Baseline lint, 20 tests and build passed before implementation. This addition was later committed and deployed (live at `88783d3`, confirmed 2026-10-31). The existing deployment workflow, App, chapter-one copy, chapter-two reducer, chapter-three reducer and original voice component have no diff from that baseline.
 
 ### Implementation phases
 
@@ -242,5 +242,15 @@ The room remains recognizable from morning to night; text sits outside the illus
 ### Remaining owner/device checks
 
 - **Owner asset:** optional real `public/audio/domingo.m4a`. No file was fabricated. The absent-file path was tested and makes no audio request; actual play/pause/seek/codec behavior cannot be verified until Jesh supplies the recording. Installation and an editable script are in `DOMINGO_RECORDING_GUIDE.md`.
-- **Not verified:** physical iPhone Safari, VoiceOver, the eventual real audio, real-person reading duration, or hosted GitHub Pages deployment of this unpublished change. Chromium touch emulation is not an iOS Safari claim.
+- **Not verified:** physical iPhone Safari, VoiceOver, the eventual real audio, real-person reading duration, or hosted GitHub Pages deployment at the time of writing (it has since deployed). Chromium touch emulation is not an iOS Safari claim.
 - No new `TODO(jesh)` placeholders occur in Sunday code. The existing Chapter 3 owner-editable content and unrelated TODOs remain unchanged.
+
+## O Esconderijo, Drop 1 — 2026-10-31
+
+Baseline: clean `main` at `88783d3`; lint, 30 tests and build passed. Branch `feat/esconderijo-drop-1`, local commits only (not pushed or deployed).
+
+- `npm run lint`, `npm test` (38/38: 30 existing + 8 new covering state, prune, "has new", draft filtering, ordering, card data) and `npm run build` pass.
+- Chromium, dev server (drafts visible) at 390x844: hub entry shows "tem coisa nova no baú"; tap-through opening; crate; card dialog (focus trap, Escape, focus restored); ending after the first card; pinned-note reread; EN; hub entry still glows while cards remain unopened; no console errors, no non-local requests, no horizontal overflow, no target under 44px. Reduced motion showed all opening lines at once.
+- Chromium, production build under `/coisinhas/` at 390x844, 375x600 and 1280x800: no draft cards, empty state shown, ending does not trigger, no console errors, no non-local requests, no overflow, no target under 44px.
+- **Not verified:** physical iPhone Safari, VoiceOver, real cards (only 3 fake drafts exist), real-person reading time. Chapter 2/3 progress was seeded in localStorage to reach the hub.
+

@@ -100,7 +100,7 @@ The main cat moves twice, then opens its card on the third tap. After that, five
 
 ## Publish updates to the existing GitHub repository
 
-The existing repository is `jeshwanthsingh/coisinhas`. Do not initialize a replacement or overwrite history. These are manual owner steps; chapter three is left uncommitted and has not been pushed or deployed by this implementation.
+The existing repository is `jeshwanthsingh/coisinhas`. Do not initialize a replacement or overwrite history. These are manual owner steps; chapters one to four are committed, pushed and live (88783d3, confirmed 2026-10-31).
 
 ```sh
 cd "/Users/jeshwanthsingh/Documents/New project/coisinhas"
@@ -184,3 +184,12 @@ One original SVG apartment stays mounted from morning to night. Rain/sun changes
 - **Build/deployment:** no new runtime dependency, backend, network integration, external artwork or fonts. `base: "./"` and the existing GitHub Pages workflow remain intact. The local production build was exercised at `/coisinhas/`; see [VERIFICATION.md](VERIFICATION.md) for evidence and remaining device/audio limits.
 
 For future updates, review the copy and recording (if desired), then run `npm ci`, `npm run lint`, `npm test`, `npm run build`, and `git diff --check`. Stage the intended files, commit normally, and push `main` only when ready. Keep repository **Settings → Pages → Build and deployment → Source: GitHub Actions**. The existing workflow publishes to `https://jeshwanthsingh.github.io/coisinhas/`; no `/docs` deployment or base-path change is needed. GitHub Pages content and optional audio must be assumed publicly reachable.
+
+## O Esconderijo (Drop 1)
+
+An optional, permanently growing den in the Jogador 2 hub, available as soon as the hub is. A short opening, an underground room in original SVG, and a stash crate of loot cards: each has a joke rarity, what happened, and what Jesh noticed about her. Opening the last unseen card clears "tem coisa nova no baú"; the first opened card triggers a short closing note (rereadable from a pinned note).
+
+- **Source:** `src/esconderijo/`, lazy-loaded like Sunday. Add cards in `cards.ts`; see [ESCONDERIJO_GUIDE.md](ESCONDERIJO_GUIDE.md). Drafts (`draft: true`) render only in `npm run dev`.
+- **State:** `coisinhas.esconderijo.v1` holds opened card ids and two flags, only in this browser. Unknown ids are dropped, invalid saves start fresh, denied storage still allows the visit. Nothing is sent and nothing measures time or attention.
+- **No audio, no network, no new dependency.**
+

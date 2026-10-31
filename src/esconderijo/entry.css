@@ -1,0 +1,47 @@
+.esc-entry {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 460px;
+  width: 100%;
+  margin: 20px auto 0;
+  padding: 16px 20px;
+  background: none;
+  color: #e2d3b7;
+  border-top: 1px solid #82778b66;
+  border-bottom: 1px solid #82778b66;
+  text-align: left;
+  min-height: 80px;
+}
+.esc-entry svg {
+  width: 74px;
+  flex-shrink: 0;
+}
+.esc-entry strong {
+  display: block;
+  font:
+    22px/1.3 Georgia,
+    serif;
+  font-weight: 400;
+}
+.esc-entry small {
+  display: block;
+  margin-top: 8px;
+  font: 13px/1.6 inherit;
+  color: #b7aabf;
+}
+.esc-entry em {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-style: normal;
+  color: #ae9ab9;
+  text-shadow: 0 0 10px #ae9ab9aa;
+}
+.esc-entry-new svg {
+  filter: drop-shadow(0 0 7px #d8b87c);
+}
+.esc-entry:focus-visible {
+  outline: 2px solid #d8b87c;
+  outline-offset: 5px;
+}

@@ -254,3 +254,11 @@ Baseline: clean `main` at `88783d3`; lint, 30 tests and build passed. Branch `fe
 - Chromium, production build under `/coisinhas/` at 390x844, 375x600 and 1280x800: no draft cards, empty state shown, ending does not trigger, no console errors, no non-local requests, no overflow, no target under 44px.
 - **Not verified:** physical iPhone Safari, VoiceOver, real cards (only 3 fake drafts exist), real-person reading time. Chapter 2/3 progress was seeded in localStorage to reach the hub.
 
+## Navigation (o mapa, hash links) — 2026-10-31
+
+Branch `feat/navigation` from `main` at `b433de2`. `npm run lint`, `npm test` (45/45: 38 existing + 7 for the hash resolver, access rules, map list and nav state) and `npm run build` pass.
+
+Chromium, production build under `/coisinhas/`, 390x844 and 1280x800, new contexts per case: in a fresh context `#esconderijo` and `#domingo` open and list Museu, Jogador 2, Domingo and Esconderijo in the map; `#depois`, `#jogador2`, unknown and empty hashes fall back to the museum (map lists only the museum); with only chapter two unlocked `#jogador2` falls back and `#depois` opens (map: Museu, Depois); with full progress every hash opens and the map lists five places, with "tem coisa nova no baú" on the stash. Map jumps, refresh staying in place, Back/Forward between places, the hub "← depois do fechamento" link, and quiet doors above the fold at 390x844 all worked. No console errors, no non-local requests, no horizontal overflow, no target under 44px.
+
+**Not verified:** physical iPhone Safari and VoiceOver; chapter 2/3 progress was seeded in localStorage.
+

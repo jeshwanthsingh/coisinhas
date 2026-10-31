@@ -8,7 +8,7 @@ Every card is one block in `src/esconderijo/cards.ts`. Nothing else needs to cha
    - `addedOn`: today, `YYYY-MM-DD`. Newest date shows first.
    - `rarity`: `"comum"`, `"raro"` or `"lendario"`. It is a joke, not a ranking of moments.
    - `icon`: one name from the list below.
-   - `title`, `story` ("o que aconteceu", 1-3 sentences), `noticed` ("o que eu notei em você", one line about her), each with `pt` and `en`.
+   - `title`, `story` (shown on the front, as short lines (one per sentence)), `noticed` (the back of the tag, one line about her), each with `pt` and `en`.
    - Delete the `draft: true` line (drafts only show in `npm run dev`).
 3. Run `npm test`. It checks unique ids, dates, icons and that every text field has both languages.
 4. Commit. Push when you are ready; the existing Pages workflow publishes it.

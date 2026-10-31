@@ -4,51 +4,52 @@ import { useReducedMotion, useSaved } from "../hooks/useMuseumState";
 import {
   KEY,
   advanceEsconderijo,
+  endingDue,
   freshEsconderijo,
   hasNew,
   prune,
+  upgrade,
   validEsconderijo,
   type EsconderijoEvent,
+  type SavedEsconderijo,
 } from "./state";
 import type { Card } from "./cards";
 import { published } from "./published";
-import { c, endingLines, openingLines } from "./content";
+import { c, endingLines } from "./content";
 import { RoomArt } from "./Artwork";
+import { crateSpot } from "./iso";
 import { Crate } from "./Crate";
 import { CardDialog } from "./CardDialog";
+import { Arrival } from "./Arrival";
 import "./esconderijo.css";
 const ids = published.map((card) => card.id);
-type Scene = "opening" | "room" | "ending";
+type Scene = "arrival" | "room" | "ending";
 function Lines({
-  lines,
   language,
   action,
   onDone,
-  footer,
 }: {
-  lines: typeof openingLines;
   language: Language;
   action: string;
   onDone: () => void;
-  footer?: React.ReactNode;
 }) {
   const [count, setCount] = useState(1);
   const reduced = useReducedMotion();
-  const visible = reduced ? lines.length : count;
+  const visible = reduced ? endingLines.length : count;
   return (
     <div className="esc-story">
       <div aria-live="polite">
-        {lines.slice(0, visible).map((line, i) => (
+        {endingLines.slice(0, visible).map((line, i) => (
           <p key={i}>{line[language]}</p>
         ))}
       </div>
-      {visible < lines.length ? (
+      {visible < endingLines.length ? (
         <button className="esc-next" onClick={() => setCount((n) => n + 1)}>
           {c.next[language]} <span aria-hidden="true">→</span>
         </button>
       ) : (
         <>
-          {footer}
+          <p className="esc-signature">{c.signature[language]}</p>
           <button className="esc-next" onClick={onDone}>
             {action} <span aria-hidden="true">→</span>
           </button>
@@ -66,17 +67,22 @@ export default function Esconderijo({
   onLanguage: (l: Language) => void;
   onExit: () => void;
 }) {
-  const [saved, setSaved] = useSaved(KEY, freshEsconderijo(), validEsconderijo);
-  const state = prune(saved, ids);
+  const [saved, setSaved] = useSaved<SavedEsconderijo>(
+    KEY,
+    freshEsconderijo(),
+    validEsconderijo,
+  );
+  const state = prune(upgrade(saved), ids);
   const dispatch = useCallback(
     (e: EsconderijoEvent) =>
-      setSaved((old) => advanceEsconderijo(prune(old, ids), e)),
+      setSaved((old) => advanceEsconderijo(prune(upgrade(old), ids), e)),
     [setSaved],
   );
   const [scene, setScene] = useState<Scene>(
-    state.openingDone ? "room" : "opening",
+    state.arrivalDone ? "room" : "arrival",
   );
   const [open, setOpen] = useState(false);
+  const [warmIn, setWarmIn] = useState(false);
   const [card, setCard] = useState<Card | null>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -84,9 +90,15 @@ export default function Esconderijo({
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [scene]);
   const fresh = hasNew(state, ids);
+  const arrived = useCallback(() => {
+    dispatch({ type: "arrival" });
+    setWarmIn(true);
+    setOpen(true);
+    setScene("room");
+  }, [dispatch]);
   function closeCard() {
     setCard(null);
-    if (!state.endingSeen && state.seen.length > 0) {
+    if (endingDue(state, ids)) {
       dispatch({ type: "ending" });
       setScene("ending");
     }
@@ -101,81 +113,91 @@ export default function Esconderijo({
           {c.title[language]}
         </h1>
       </header>
-      <div className="esc-world">
-        <div
-          className="esc-stage"
-          role="group"
-          aria-label={c.roomAlt[language]}
-        >
-          <RoomArt glow={fresh} />
-          {scene === "room" && (
-            <button
-              className={`esc-crate-btn ${fresh ? "esc-glow" : ""}`}
-              aria-expanded={open}
-              aria-label={open ? c.crateClose[language] : c.crate[language]}
-              onClick={() => setOpen((o) => !o)}
-            >
-              <span aria-hidden="true">✧</span>
-            </button>
-          )}
+      {scene === "arrival" ? (
+        <div className="esc-world">
+          <Arrival language={language} onDone={arrived} />
         </div>
-        <section className="esc-controls" key={scene}>
-          {scene === "opening" && (
-            <Lines
-              lines={openingLines}
-              language={language}
-              action={c.toStash[language]}
-              onDone={() => {
-                dispatch({ type: "opening" });
-                setScene("room");
-                setOpen(true);
-              }}
+      ) : (
+        <div className="esc-world">
+          <div
+            className={`esc-stage ${warmIn ? "esc-warm-in" : ""}`}
+            role="group"
+            aria-label={c.roomAlt[language]}
+          >
+            <RoomArt
+              glow={fresh}
+              awake={scene === "ending"}
+              dim={scene === "ending"}
+              warm={state.ending15Seen}
+              close={scene === "ending"}
             />
-          )}
-          {scene === "room" && (
-            <>
-              {fresh && (
-                <p className="esc-new" role="status">
-                  {c.newInStash[language]}
-                </p>
-              )}
-              {open && (
-                <Crate
-                  cards={published}
-                  seen={state.seen}
-                  language={language}
-                  onCard={(next) => {
-                    dispatch({ type: "open", id: next.id });
-                    setCard(next);
-                  }}
-                />
-              )}
-              {state.endingSeen && (
-                <button
-                  className="esc-text esc-note"
-                  onClick={() => setScene("ending")}
-                >
-                  ✎ {c.note[language]}
-                </button>
-              )}
-            </>
-          )}
-          {scene === "ending" && (
-            <Lines
-              lines={endingLines}
-              language={language}
-              action={c.backToRoom[language]}
-              onDone={() => setScene("room")}
-              footer={<p className="esc-signature">{c.signature[language]}</p>}
-            />
-          )}
-        </section>
-      </div>
+            {scene === "room" && (
+              <button
+                className={`esc-crate-btn ${fresh ? "esc-glow" : ""}`}
+                style={{ left: `${crateSpot.x}%`, top: `${crateSpot.y}%` }}
+                aria-expanded={open}
+                aria-label={open ? c.crateClose[language] : c.crate[language]}
+                onClick={() => setOpen((o) => !o)}
+              />
+            )}
+          </div>
+          <section className="esc-controls" key={scene}>
+            {scene === "room" && (
+              <>
+                <p className="esc-roomline">{c.roomLine[language]}</p>
+                {fresh && (
+                  <p className="esc-new" role="status">
+                    {c.newInStash[language]}
+                  </p>
+                )}
+                {open && (
+                  <Crate
+                    cards={published}
+                    seen={state.seen}
+                    language={language}
+                    onCard={(next) => {
+                      dispatch({ type: "open", id: next.id });
+                      setCard(next);
+                    }}
+                  />
+                )}
+                <div className="esc-quiet">
+                  {state.ending15Seen && (
+                    <button
+                      className="esc-text esc-note"
+                      onClick={() => setScene("ending")}
+                    >
+                      ✎ {c.note[language]}
+                    </button>
+                  )}
+                  <button
+                    className="esc-text"
+                    onClick={() => {
+                      setWarmIn(false);
+                      setScene("arrival");
+                    }}
+                  >
+                    ↑ {c.replay[language]}
+                  </button>
+                </div>
+              </>
+            )}
+            {scene === "ending" && (
+              <Lines
+                language={language}
+                action={c.backToRoom[language]}
+                onDone={() => setScene("room")}
+              />
+            )}
+          </section>
+        </div>
+      )}
       {card && (
         <CardDialog
           card={card}
           language={language}
           onLanguage={onLanguage}
+          onFlip={(id) => dispatch({ type: "flip", id })}
           onClose={closeCard}
         />
       )}

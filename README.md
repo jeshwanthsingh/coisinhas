@@ -185,12 +185,13 @@ One original SVG apartment stays mounted from morning to night. Rain/sun changes
 
 For future updates, review the copy and recording (if desired), then run `npm ci`, `npm run lint`, `npm test`, `npm run build`, and `git diff --check`. Stage the intended files, commit normally, and push `main` only when ready. Keep repository **Settings → Pages → Build and deployment → Source: GitHub Actions**. The existing workflow publishes to `https://jeshwanthsingh.github.io/coisinhas/`; no `/docs` deployment or base-path change is needed. GitHub Pages content and optional audio must be assumed publicly reachable.
 
-## O Esconderijo (Drop 1)
+## O Esconderijo (Drop 1.5)
 
-An optional, permanently growing den in the Jogador 2 hub, available as soon as the hub is. A short opening, an underground room in original SVG, and a stash crate of loot cards: each has a joke rarity, what happened, and what Jesh noticed about her. Opening the last unseen card clears "tem coisa nova no baú"; the first opened card triggers a short closing note (rereadable from a pinned note).
+An optional, permanently growing den in the Jogador 2 hub (`#esconderijo`). First visit: a topside night where she holds (or just taps) to extract and descends into the hideout, drawn in the same isometric style as the museum room, with the museum's black cat on the crate. The crate pulls out paper luggage tags: the front tells the moment, "vira a etiqueta" flips it to one line about her (on "resgates" the back first asks to hold, or tap, to revive). After flipping 3 different tags, the next time one is closed a short ending plays and the room stays slightly warmer; a pinned note rereads it and "subir de novo" replays the arrival.
 
-- **Source:** `src/esconderijo/`, lazy-loaded like Sunday. Add cards in `cards.ts`; see [ESCONDERIJO_GUIDE.md](ESCONDERIJO_GUIDE.md). Drafts (`draft: true`) render only in `npm run dev`.
-- **State:** `coisinhas.esconderijo.v1` holds opened card ids and two flags, only in this browser. Unknown ids are dropped, invalid saves start fresh, denied storage still allows the visit. Nothing is sent and nothing measures time or attention.
+- **Source:** `src/esconderijo/`, lazy-loaded like Sunday. Add cards in `cards.ts`; see [ESCONDERIJO_GUIDE.md](ESCONDERIJO_GUIDE.md). Parked cards: [ESCONDERIJO_LATER.md](ESCONDERIJO_LATER.md).
+- **State:** `coisinhas.esconderijo.v1` keeps opened card ids, flipped ids and arrival/ending flags, only in this browser. Older saves keep their cards and upgrade silently (whoever saw the old ending sees the new one after 3 more flips). Nothing is sent and nothing measures time or attention.
+- **Accessibility:** every hold has a plain tap and a keyboard (Space/Enter) alternative; releasing early only resets. Reduced motion: single tap, crossfade instead of the 3D flip, no animation.
 - **No audio, no network, no new dependency.**
 
 ## Navigation: o mapa and direct links

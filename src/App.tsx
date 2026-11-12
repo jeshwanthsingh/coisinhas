@@ -68,6 +68,9 @@ export default function App() {
     nav,
   );
   const [boot] = useState(() => resolvePlace(window.location.hash, access));
+  // #tradutor is always open, so the map always lists it (even before the hub is reachable).
+  const listed = visiblePlaces(access);
+  const mapList = listed.includes("tradutor") ? listed : [...listed, "tradutor" as const];
   const [place, setPlace] = useState<Place>(boot);
   const [p2, setP2] = useState(() => ({
     scene: sceneFor(boot, player.slot),
@@ -155,7 +158,7 @@ export default function App() {
             language={language}
             onLanguage={setLanguage}
             current={place}
-            list={visiblePlaces(access)}
+            list={mapList}
             onGo={go}
           />
           <div

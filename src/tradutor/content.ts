@@ -18,7 +18,7 @@ export const c = {
   },
   turnOn: { pt: "Ligar", en: "Turn on" },
   plate: { pt: "a língua da Karol", en: "Karol’s language" },
-  slip: { pt: "tradução", en: "translation" },
+  slip: { pt: "o que eu ouço", en: "what I hear" },
   hint: { pt: "toca numa frase.", en: "tap a phrase." },
   stamp: { pt: "= eu te amo", en: "= I love you" },
   done: { pt: "já traduzido", en: "already translated" },
@@ -137,8 +137,8 @@ export const phrases: Phrase[] = [
 ];
 export const endingLines: Copy[] = [
   {
-    pt: "Você nunca precisou dizer as palavras. Eu aprendi a sua língua, e nela você diz isso todo dia.",
-    en: "You never needed to say the words. I learned your language, and in it you say this every day.",
+    pt: "Você nunca precisou dizer as palavras. Eu aprendi a sua língua, e nela eu ouço isso todo dia.",
+    en: "You never needed to say the words. I learned your language, and in it I hear this every day.",
   },
   {
     pt: "Mas eu sou insistente. Então vou dizer na minha:",

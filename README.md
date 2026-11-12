@@ -194,6 +194,15 @@ An optional, permanently growing den in the Jogador 2 hub (`#esconderijo`). Firs
 - **Accessibility:** every hold has a plain tap and a keyboard (Space/Enter) alternative; releasing early only resets. Reduced motion: single tap, crossfade instead of the 3D flip, no animation.
 - **No audio, no network, no new dependency.**
 
+## O Tradutor
+
+An optional place in the Jogador 2 hub (`#tradutor`, always open like `#domingo` and `#esconderijo`). A dim workshop with an old brass machine under a cloth: tap one of nine things Karol says or does and the machine translates it, types the line onto a paper slip and stamps it "= eu te amo". At 9/9 a lever turns the machine around and says it in Jesh's language. It asks nothing back: no reply field, nothing sent, nothing measured.
+
+- **Source:** `src/tradutor/`, lazy-loaded like Sunday and Esconderijo. All copy, including the nine phrases and their translations, is in `content.ts` as `{ pt, en }`.
+- **State:** `coisinhas.tradutor.v1` = `{ version: 1, translated: [ids], endingSeen }`, only in this browser. Replays never inflate progress; an `endingSeen` without all nine translations is rejected as invalid. Blocked storage still allows the visit. Visiting also records `tradutor` in `coisinhas.nav.v1` (older nav saves stay valid).
+- **Accessibility:** real buttons, keyboard, targets of at least 44px, focus moves on scene change, reduced motion shows the translation, stamp and ending at once and crossfades instead of flipping.
+- **No audio, no network, no new dependency.**
+
 ## Navigation: o mapa and direct links
 
 A small folded-map button next to PT/EN opens a drawer listing only the places already unlocked (nothing locked is shown). Each place has a hash URL, so a refresh stays put and the browser Back button moves between places. There is no router library and no server fallback: `base` stays `./`.

@@ -12,6 +12,7 @@ import {
 import { clockTime, greeting, SF_ZONE, KAROL_ZONE } from "./time";
 import { SundayEntry } from "../sunday/Entry";
 import { EsconderijoEntry } from "../esconderijo/Entry";
+import { TradutorEntry } from "../tradutor/Entry";
 import { HubArt } from "./Artwork";
 export function Hub({
   language,
@@ -88,6 +89,13 @@ export function Hub({
         onEnter={() => onEnter("esconderijo")}
         buttonRef={(node) => {
           buttons.current.esconderijo = node;
+        }}
+      />
+      <TradutorEntry
+        language={language}
+        onEnter={() => onEnter("tradutor")}
+        buttonRef={(node) => {
+          buttons.current.tradutor = node;
         }}
       />
       <button

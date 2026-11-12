@@ -74,7 +74,10 @@ export default function App() {
     key: 0,
   }));
   const [playerView, setPlayerView] = useState(
-    boot === "jogador2" || boot === "domingo" || boot === "esconderijo",
+    boot === "jogador2" ||
+      boot === "domingo" ||
+      boot === "esconderijo" ||
+      boot === "tradutor",
   );
   const [afterHours, setAfterHours] = useState(boot === "depois");
   const [entered, setEntered] = useState(boot !== "museu");
@@ -231,6 +234,7 @@ export default function App() {
                   access.jogador2 && "jogador2",
                   nav.opened.includes("domingo") && "domingo",
                   nav.opened.includes("esconderijo") && "esconderijo",
+                  nav.opened.includes("tradutor") && "tradutor",
                 ] as const
               ).map(
                 (door) =>

@@ -7,6 +7,8 @@ export const sceneFor = (place: Place, slot: Player2State["slot"]): Scene =>
     ? "sunday"
     : place === "esconderijo"
       ? "esconderijo"
-      : slot === "karol"
-        ? "hub"
-        : "title";
+      : place === "tradutor"
+        ? "tradutor"
+        : slot === "karol"
+          ? "hub"
+          : "title";

@@ -18,6 +18,7 @@ export const placeNames: Record<Place, Copy> = {
     en: "the Sunday that hasn’t happened yet",
   },
   esconderijo: { pt: "o esconderijo", en: "the hideout" },
+  tradutor: { pt: "o tradutor", en: "the translator" },
 };
 /** Short labels for the quiet doors on the main page. */
 export const doorNames: Record<Exclude<Place, "museu">, Copy> = {
@@ -25,4 +26,5 @@ export const doorNames: Record<Exclude<Place, "museu">, Copy> = {
   jogador2: { pt: "jogador 2", en: "player 2" },
   domingo: { pt: "o domingo", en: "the Sunday" },
   esconderijo: { pt: "o esconderijo", en: "the hideout" },
+  tradutor: { pt: "o tradutor", en: "the translator" },
 };

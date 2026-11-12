@@ -9,6 +9,7 @@ import {
   Jogador2Icon,
   MuseumIcon,
   SundayIcon,
+  TradutorIcon,
 } from "./Icons";
 import type { Place } from "./places";
 import "./map.css";
@@ -18,6 +19,7 @@ const icons: Record<Place, () => React.JSX.Element> = {
   jogador2: Jogador2Icon,
   domingo: SundayIcon,
   esconderijo: EsconderijoIcon,
+  tradutor: TradutorIcon,
 };
 function MapDialog({
   language,

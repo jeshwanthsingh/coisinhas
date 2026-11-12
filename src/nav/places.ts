@@ -4,14 +4,20 @@ export const places = [
   "jogador2",
   "domingo",
   "esconderijo",
+  "tradutor",
 ] as const;
 export type Place = (typeof places)[number];
+/** Places inside the Jogador 2 hub that always open from a direct link. */
+const hubPlaces = ["domingo", "esconderijo", "tradutor"] as const;
+export type HubPlace = (typeof hubPlaces)[number];
+const isHubPlace = (v: unknown): v is HubPlace =>
+  (hubPlaces as readonly unknown[]).includes(v);
 export type Access = { depois: boolean; jogador2: boolean };
 /** hub: Jogador 2 was reached through a direct link; opened: which hub places she has visited. */
 export type NavState = {
   version: 1;
   hub: boolean;
-  opened: ("domingo" | "esconderijo")[];
+  opened: HubPlace[];
 };
 export const NAV_KEY = "coisinhas.nav.v1";
 export const freshNav = (): NavState => ({
@@ -26,13 +32,13 @@ export function validNav(v: unknown): v is NavState {
     s.version === 1 &&
     typeof s.hub === "boolean" &&
     Array.isArray(s.opened) &&
-    s.opened.every((p) => p === "domingo" || p === "esconderijo") &&
+    s.opened.every(isHubPlace) &&
     new Set(s.opened).size === s.opened.length
   );
 }
-/** Visiting domingo/esconderijo makes the hub reachable; returns the same object when nothing changes. */
+/** Visiting a hub place makes the hub reachable; returns the same object when nothing changes. */
 export function markPlace(s: NavState, place: Place): NavState {
-  if (place !== "domingo" && place !== "esconderijo") return s;
+  if (!isHubPlace(place)) return s;
   if (s.hub && s.opened.includes(place)) return s;
   return {
     ...s,
@@ -49,10 +55,10 @@ export const accessFor = (
   depois: p.legacy || p.unlocked,
   jogador2: p.letter || nav.hub,
 });
-/** Hash -> place. Domingo and esconderijo always open; the rest need access; anything else is the museum. */
+/** Hash -> place. Domingo, esconderijo and tradutor always open; the rest need access; anything else is the museum. */
 export function resolvePlace(hash: string, access: Access): Place {
   const key = hash.replace(/^#\/?/, "").toLowerCase();
-  if (key === "domingo" || key === "esconderijo") return key;
+  if (isHubPlace(key)) return key;
   if (key === "depois" && access.depois) return "depois";
   if (key === "jogador2" && access.jogador2) return "jogador2";
   return "museu";
@@ -61,5 +67,7 @@ export function resolvePlace(hash: string, access: Access): Place {
 export const visiblePlaces = (access: Access): Place[] => [
   "museu",
   ...(access.depois ? (["depois"] as const) : []),
-  ...(access.jogador2 ? (["jogador2", "domingo", "esconderijo"] as const) : []),
+  ...(access.jogador2
+    ? (["jogador2", "domingo", "esconderijo", "tradutor"] as const)
+    : []),
 ];

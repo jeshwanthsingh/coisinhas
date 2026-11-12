@@ -72,6 +72,7 @@ test("map lists only unlocked places, in order", () => {
     "jogador2",
     "domingo",
     "esconderijo",
+    "tradutor",
   ]);
 });
 test("nav state: validator, markPlace dedupes and never mutates", () => {

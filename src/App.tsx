@@ -68,13 +68,19 @@ export default function App() {
     nav,
   );
   const [boot] = useState(() => resolvePlace(window.location.hash, access));
+  // #tradutor is always open, so the map always lists it (even before the hub is reachable).
+  const listed = visiblePlaces(access);
+  const mapList = listed.includes("tradutor") ? listed : [...listed, "tradutor" as const];
   const [place, setPlace] = useState<Place>(boot);
   const [p2, setP2] = useState(() => ({
     scene: sceneFor(boot, player.slot),
     key: 0,
   }));
   const [playerView, setPlayerView] = useState(
-    boot === "jogador2" || boot === "domingo" || boot === "esconderijo",
+    boot === "jogador2" ||
+      boot === "domingo" ||
+      boot === "esconderijo" ||
+      boot === "tradutor",
   );
   const [afterHours, setAfterHours] = useState(boot === "depois");
   const [entered, setEntered] = useState(boot !== "museu");
@@ -152,7 +158,7 @@ export default function App() {
             language={language}
             onLanguage={setLanguage}
             current={place}
-            list={visiblePlaces(access)}
+            list={mapList}
             onGo={go}
           />
           <div
@@ -231,6 +237,7 @@ export default function App() {
                   access.jogador2 && "jogador2",
                   nav.opened.includes("domingo") && "domingo",
                   nav.opened.includes("esconderijo") && "esconderijo",
+                  nav.opened.includes("tradutor") && "tradutor",
                 ] as const
               ).map(
                 (door) =>

@@ -94,3 +94,34 @@ export const Jogador2Icon = () => (
     <circle cx="70" cy="56" r="3.5" fill="#2d3a4a" />
   </svg>
 );
+export const TradutorIcon = () => (
+  <svg {...base}>
+    <rect
+      x="14"
+      y="30"
+      width="67"
+      height="44"
+      rx="6"
+      fill="#b08a4a"
+      stroke="#6f5426"
+      strokeWidth="3"
+    />
+    <circle
+      cx="34"
+      cy="50"
+      r="11"
+      fill="#d8b87c"
+      stroke="#6f5426"
+      strokeWidth="3"
+    />
+    <circle cx="34" cy="50" r="4" fill="#6f5426" />
+    <path
+      d="M52 44h22M52 54h16"
+      stroke="#6f5426"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+    <path d="M60 30V16h16v14" fill="#e2d3b7" stroke="#8c7c71" strokeWidth="2" />
+    <path d="M64 22h8" stroke="#b3473d" strokeWidth="3" strokeLinecap="round" />
+  </svg>
+);

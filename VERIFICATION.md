@@ -270,3 +270,11 @@ Chromium, production build under `/coisinhas/`: first visit with a pointer hold 
 
 **Not verified:** physical iPhone Safari and VoiceOver (including the 3D flip), long-press behaviour on a real touch screen, real-person reading time.
 
+## O Tradutor — 2026-11-12
+
+Branch `feat/tradutor` from `main` at `7cc4bf5`. `npm run lint` and `npm run build` pass. `npm test`: 56 tests, 55 pass. The one failure is the existing `nav-places` test "map lists only unlocked places, in order", which still expects the old five-place list; it needs the new `tradutor` entry and could not be edited under the repo's test-edit guard (the new expectation is covered in the new nav test file for tradutor). New tests: a tradutor state file (5 tests) and a tradutor nav file (4 tests).
+
+Chromium, production build under `/coisinhas/` at 375x812 and 1440x900, fresh contexts: `#tradutor` opens the arrival; "Ligar" lifts the cloth to the machine; each of the nine tiles slides a slip in, turns the gears, types the translation and thumps the stamp; a repeat tap rereads without inflating the counter (1/9 stays 1/9); the lever appears only at 9/9; the flip shows the four lines one by one, with the large line alone for a beat (the continue button waits about two seconds); the signature follows; "Reler" returns to the machine with 9/9 kept; a reload stays on `#tradutor` at 9/9. Keyboard only (Enter and Space on every control, focus moves to the heading on scene change) completed the whole path. Reduced motion plus English: single tap to the machine, translation and stamp immediate, all ending lines at once, crossfade instead of the flip. The map lists "o tradutor" and an old `coisinhas.nav.v1` save (`opened: ["domingo"]`) still loads and gains `tradutor`; the hub shows the entry. No console errors, no non-local requests, no horizontal overflow and no target under 44px at either size.
+
+**Not verified:** physical iPhone Safari (including the 3D flip) and VoiceOver; chapter progress was not seeded for the direct `#tradutor` checks, so the hub entry was reached via the "back" link.
+

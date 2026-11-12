@@ -191,6 +191,23 @@ export default function Tradutor({
                 </div>
                 <section className="trad-slip" aria-label={c.slip[language]}>
                   <h2>{c.slip[language]}</h2>
+                  {/* Announces the finished translation (also on a replay: the keyed span is new each time). */}
+                  <div
+                    className="trad-sr"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    {phrase && phase === "done" && (
+                      <span key={shown!.n}>
+                        {[phrase.said?.[language], phrase.detail?.[language]]
+                          .filter(Boolean)
+                          .join(" ")}
+                        {" — "}
+                        {text} {c.stamp[language]}
+                      </span>
+                    )}
+                  </div>
                   {phrase ? (
                     <div
                       key={shown!.n}
@@ -203,8 +220,10 @@ export default function Tradutor({
                           <small>{phrase.detail[language]}</small>
                         )}
                       </p>
-                      <p className="trad-translation" aria-label={text}>
-                        <span aria-hidden="true">{text.slice(0, visible)}</span>
+                      <p className="trad-translation">
+                        <span aria-hidden={phase !== "done"}>
+                          {text.slice(0, visible)}
+                        </span>
                         <span aria-hidden="true" className="trad-rest">
                           {text.slice(visible)}
                         </span>

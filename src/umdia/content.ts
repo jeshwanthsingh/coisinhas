@@ -34,8 +34,8 @@ export const c = {
 
 export const intro: Copy[] = [
   {
-    pt: "Tem um filme que você ama sobre duas pessoas vistas no mesmo dia, ano depois de ano.",
-    en: "There’s a film you love about two people, seen on the same day, year after year.",
+    pt: "O seu filme favorito mostra duas pessoas sempre no mesmo dia do ano, ano depois de ano.",
+    en: "Your favourite film shows two people always on the same day of the year, year after year.",
   },
   {
     pt: "A gente ainda não tem anos. Mas tem o dia 19.",

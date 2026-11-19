@@ -35,9 +35,8 @@ export default function UmDia({
     (e: UmDiaEvent) => setState((old) => advanceUmDia(old, e)),
     [setState],
   );
-  const [scene, setScene] = useState<Scene>(
-    state.seen.length > 0 ? "diary" : "arrival",
-  );
+  // The cover always shows first; opening the diary resumes on the last page read.
+  const [scene, setScene] = useState<Scene>("arrival");
   const [turn, setTurn] = useState<{ dir: "next" | "prev"; n: number }>({
     dir: "next",
     n: 0,

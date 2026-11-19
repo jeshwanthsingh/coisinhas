@@ -5,10 +5,11 @@ export const places = [
   "domingo",
   "esconderijo",
   "tradutor",
+  "umdia",
 ] as const;
 export type Place = (typeof places)[number];
 /** Places inside the Jogador 2 hub that always open from a direct link. */
-const hubPlaces = ["domingo", "esconderijo", "tradutor"] as const;
+const hubPlaces = ["domingo", "esconderijo", "tradutor", "umdia"] as const;
 export type HubPlace = (typeof hubPlaces)[number];
 const isHubPlace = (v: unknown): v is HubPlace =>
   (hubPlaces as readonly unknown[]).includes(v);
@@ -55,7 +56,7 @@ export const accessFor = (
   depois: p.legacy || p.unlocked,
   jogador2: p.letter || nav.hub,
 });
-/** Hash -> place. Domingo, esconderijo and tradutor always open; the rest need access; anything else is the museum. */
+/** Hash -> place. Domingo, esconderijo, tradutor and umdia always open; the rest need access; anything else is the museum. */
 export function resolvePlace(hash: string, access: Access): Place {
   const key = hash.replace(/^#\/?/, "").toLowerCase();
   if (isHubPlace(key)) return key;
@@ -68,6 +69,6 @@ export const visiblePlaces = (access: Access): Place[] => [
   "museu",
   ...(access.depois ? (["depois"] as const) : []),
   ...(access.jogador2
-    ? (["jogador2", "domingo", "esconderijo", "tradutor"] as const)
+    ? (["jogador2", "domingo", "esconderijo", "tradutor", "umdia"] as const)
     : []),
 ];

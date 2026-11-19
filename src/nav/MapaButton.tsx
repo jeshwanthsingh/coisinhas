@@ -10,6 +10,7 @@ import {
   MuseumIcon,
   SundayIcon,
   TradutorIcon,
+  UmDiaIcon,
 } from "./Icons";
 import type { Place } from "./places";
 import "./map.css";
@@ -20,6 +21,7 @@ const icons: Record<Place, () => React.JSX.Element> = {
   domingo: SundayIcon,
   esconderijo: EsconderijoIcon,
   tradutor: TradutorIcon,
+  umdia: UmDiaIcon,
 };
 function MapDialog({
   language,

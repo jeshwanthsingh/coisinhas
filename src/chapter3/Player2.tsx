@@ -26,6 +26,8 @@ const Esconderijo = lazy(() => import("../esconderijo/Esconderijo"));
 import { c as esconderijoCopy } from "../esconderijo/content";
 const Tradutor = lazy(() => import("../tradutor/Tradutor"));
 import { c as tradutorCopy } from "../tradutor/content";
+const UmDia = lazy(() => import("../umdia/UmDia"));
+import { c as umdiaCopy } from "../umdia/content";
 export type Scene =
   | "title"
   | "hub"
@@ -35,7 +37,8 @@ export type Scene =
   | "ending"
   | "sunday"
   | "esconderijo"
-  | "tradutor";
+  | "tradutor"
+  | "umdia";
 export type SceneProps = {
   language: Language;
   state: Player2State;
@@ -71,7 +74,9 @@ export function Player2({
             ? "esconderijo"
             : scene === "tradutor"
               ? "tradutor"
-              : "jogador2",
+              : scene === "umdia"
+                ? "umdia"
+                : "jogador2",
       ),
     [scene, onPlace],
   );
@@ -86,6 +91,7 @@ export function Player2({
     | "sunday"
     | "esconderijo"
     | "tradutor"
+    | "umdia"
   >("mode");
   const buttons = useRef<Partial<Record<Scene, HTMLButtonElement | null>>>({});
   useEffect(() => {
@@ -122,6 +128,7 @@ export function Player2({
     sunday: sundayCopy.title,
     esconderijo: esconderijoCopy.title,
     tradutor: tradutorCopy.title,
+    umdia: umdiaCopy.title,
   };
   if (scene === "sunday")
     return (
@@ -175,6 +182,25 @@ export function Player2({
         }
       >
         <Tradutor
+          language={language}
+          onLanguage={onLanguage}
+          onExit={() => enter("hub")}
+        />
+      </Suspense>
+    );
+  if (scene === "umdia")
+    return (
+      <Suspense
+        fallback={
+          <main>
+            <p>…</p>
+            <button onClick={() => enter("hub")}>
+              {umdiaCopy.hub[language]}
+            </button>
+          </main>
+        }
+      >
+        <UmDia
           language={language}
           onLanguage={onLanguage}
           onExit={() => enter("hub")}

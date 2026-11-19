@@ -217,3 +217,14 @@ A small folded-map button next to PT/EN opens a drawer listing only the places a
 
 `#domingo` and `#esconderijo` work in a fresh browser and also make the Jogador 2 hub reachable (`coisinhas.nav.v1`: a hub flag plus which of the two she has opened). No other chapter is marked complete. Unknown or locked hashes fall back to the museum silently. Logic: `src/nav/places.ts` (tested in `tests/nav-places.test.mjs`); the main-page quiet doors replace the old bottom shortcuts.
 
+
+## Um dia
+
+An optional place in the Jogador 2 hub (`#umdia`, always open like `#tradutor`). Inspired by the shape of her favourite film: their story told one page per 19th of the month. Each page has the date, a small original drawing, her own words that day ("você disse") and a short note from Jesh. After the latest 19th the pages are unwritten; the last page is "o primeiro abraço", with a blank date.
+
+- **Source:** `src/umdia/`, lazy-loaded. All copy and pages are in `content.ts` as `{ pt, en }`; her quotes stay exactly as she wrote them.
+- **Each new 19th:** add an id to `pageIds` in `state.ts` (before `"abraco"`) and a page to `diary` in `content.ts`, then `npm test`.
+- **The first hug:** set `HUG_DATE` in `content.ts` (e.g. `"19/12/2026"`) only after you have picked the date together. While it is `null` the page stays blank on purpose.
+- **State:** `coisinhas.umdia.v1` = `{ version: 1, page, seen }`, only in this browser; a refresh reopens the last page. Invalid saves start fresh; blocked storage still allows the visit.
+- **Accessibility:** real buttons, 44px+ targets, arrow keys turn pages, page changes are announced politely, reduced motion removes the page-turn animation.
+- **No audio, no network, no new dependency.**

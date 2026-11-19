@@ -9,6 +9,8 @@ export const sceneFor = (place: Place, slot: Player2State["slot"]): Scene =>
       ? "esconderijo"
       : place === "tradutor"
         ? "tradutor"
+        : place === "umdia"
+          ? "umdia"
         : slot === "karol"
           ? "hub"
           : "title";

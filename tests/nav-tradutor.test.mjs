@@ -26,6 +26,7 @@ test("the map lists tradutor last, only once the hub is reachable", () => {
     "domingo",
     "esconderijo",
     "tradutor",
+    "umdia",
   ]);
 });
 test("a visit makes the hub reachable and dedupes", () => {

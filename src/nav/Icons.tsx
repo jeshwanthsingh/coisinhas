@@ -125,3 +125,22 @@ export const TradutorIcon = () => (
     <path d="M64 22h8" stroke="#b3473d" strokeWidth="3" strokeLinecap="round" />
   </svg>
 );
+export const UmDiaIcon = () => (
+  <svg {...base}>
+    <rect x="20" y="14" width="56" height="70" rx="5" fill="#8b5a44" />
+    <rect x="25" y="18" width="48" height="62" rx="3" fill="#a06a50" />
+    <path d="M31 18v62" stroke="#5a3a2c" strokeWidth="3" />
+    <rect x="38" y="36" width="30" height="16" rx="2" fill="#e2d3b7" />
+    <text
+      x="53"
+      y="48"
+      fill="#2a2218"
+      fontSize="11"
+      fontFamily="Georgia, serif"
+      textAnchor="middle"
+    >
+      19
+    </text>
+    <path d="M60 80v10l4-3 4 3V80" fill="#b3473d" />
+  </svg>
+);

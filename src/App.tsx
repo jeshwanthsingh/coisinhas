@@ -80,7 +80,8 @@ export default function App() {
     boot === "jogador2" ||
       boot === "domingo" ||
       boot === "esconderijo" ||
-      boot === "tradutor",
+      boot === "tradutor" ||
+      boot === "umdia",
   );
   const [afterHours, setAfterHours] = useState(boot === "depois");
   const [entered, setEntered] = useState(boot !== "museu");
@@ -238,6 +239,7 @@ export default function App() {
                   nav.opened.includes("domingo") && "domingo",
                   nav.opened.includes("esconderijo") && "esconderijo",
                   nav.opened.includes("tradutor") && "tradutor",
+                  nav.opened.includes("umdia") && "umdia",
                 ] as const
               ).map(
                 (door) =>
